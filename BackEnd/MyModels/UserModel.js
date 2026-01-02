@@ -3,18 +3,19 @@ import mongoose from "mongoose";
 const UserSchemaModel = new mongoose.Schema({
     fullName : {
         type: String,
-        require : true
+        required : true
     },
-    UserName : {
+    userName : {
         type : String,
-        require: true,
+        required: true,
         unique : true
     },
     password : {
-        type: String, require: true
+        type: String, required: true
     },
     birthDay : {
-        type: Date, require: true
+        type: Date, 
+        // required: true
     },
     profilePic : { type: String},
     Blogs : [

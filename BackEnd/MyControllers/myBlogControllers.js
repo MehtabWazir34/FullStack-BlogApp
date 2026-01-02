@@ -17,9 +17,9 @@ const newBlog = async(req, res)=>{
         }
 
         const myNewBlog = await myBlog.create(
-            {title, description, write: req.user._id}
+            {title, description, writer: req.user._id}
         );
-        await myUser.findByIdAndUpdate(req.user._id, {$push:{blogs : myNewBlog}}, {new: true});
+        await myUser.findByIdAndUpdate(req.user._id, {$push:{Blogs : myNewBlog}}, {new: true});
         res.status(200).json({AlrtMsg:"Blog added", myNewBlog})
     } catch (error) {
         

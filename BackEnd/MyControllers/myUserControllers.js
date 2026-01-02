@@ -3,47 +3,59 @@ import myUser from '../MyModels/UserModel.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-export const CreateAccount = async(req, res)=>{
-    try {
-        const {fullName, UserName, Password, birthDay} = req.body;
-        if(!fullName || !UserName || !Password || !birthDay){
-            return res.status(420).json({
-                AlrMsg: 'Opps! All fields are requireds'
-            })
-        };
-        let accountExts = await myUser.findOne({UserName});
-        if(accountExts)
-        {
-           return res.status(503).json({
-                AlrMsg: 'Plx login, account exists already'
-            })
-        }
-        let hashedPassword = await bcrypt.hash(Password, 10);
-        let theUser = await myUser.create({
-            fullName, UserName, birthDay, password: hashedPassword
-        });
+export const CreateAccount = async (req, res) => {
+    console.log(req.body);
+    
+  try {
+    const { fullName, userName, password, birthDay } = req.body || {};
 
-        let token = await jwt.sign({id: theUser._id}, 'myTokenKey123',{ expiresIn: '7d'});
-        theUser.token = token;
-        await theUser.save();
-        theUser.Password = undefined;
-        res.status(200).json({AlrMsg:"Created ✅"})
-        
-    } catch (error) {
-        console.log('SOmething wrong❌', error)
-        return res.status(402).json({AlrMsg:error.message})
-        
+    if (!fullName || !userName || !password || !birthDay) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-}
+
+    const existingUser = await myUser.findOne({ userName });
+    if (existingUser) {
+      return res.status(409).json({ message: "Account already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await myUser.create({
+      fullName,
+      userName,
+      birthDay,
+      password: hashedPassword
+    });
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    user.password = undefined;
+
+    return res.status(201).json({
+      success: true,
+      token,
+      user
+    });
+
+  } catch (error) {
+    console.error("CreateAccount error ❌", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 
 const Login = async(req, res)=>{
     try {
-        const {UserName, password} = req.body;
-        if(!UserName || !password){
+        const {userName, password} = req.body;
+        if(!userName || !password){
             return res.status(430).json({AlrMsg:"Required both"})
         };
 
-        let theUser = await myUser.findOne({username});
+        let theUser = await myUser.findOne({userName});
         if(!theUser){
             return res.status(430).json({AlrMsg:"No account, plx create first."})
         };
@@ -52,16 +64,25 @@ const Login = async(req, res)=>{
             return res.status(435).json({AlrMsg:'Bsdk ghalt password enter kiaa, try again'})
         };
         let token = jwt.sign({id: theUser._id}, 'myTokenKey123',{expiresIn: '7d'});
-        theUser.token = token;
-        await theUser.save();
+        // theUser.token = token;
+        // await theUser.save();
         theUser.password = undefined;
 
         res.status(200).json({
-            AlrMsg:"Logged in ✅"
+            AlrMsg:"Logged in ✅",
+            token,
+            user :{
+                fullName: theUser.fullName, 
+                userName: theUser.userName,
+                id: theUser._id
+            }
         })
         
     } catch (error) {
-        
+        console.error("Login error ❌", error);
+        return res.status(500).json({
+        message: error.message
+        });
     }
 }
 
@@ -99,14 +120,15 @@ const seeProfile = async(req, res) =>{
 
 const upDateUserInfo = async(req, res)=>{
     try {
-        const {fullName, username, birthDay} = req.body
+        const {fullName, userName, birthDay} = req.body
         if(!req.user || !req.user._id){
             return res.status(420).json({AlrMsg:"Unauthorized"})
         };
 
-        let updateTheUser = await myUser.findById(req.user._id,
-            {fullName, username, birthDay}, {new: true}
-        ).select('-password');
+        let updateTheUser = await myUser.findByIdAndUpdate(
+            req.user._id,
+            {fullName, userName, birthDay}, {new: true}
+            ).select('-password');
         if(!updateTheUser){
             return res.status(430).json({AlrMsg:"NOt found account"});
         };

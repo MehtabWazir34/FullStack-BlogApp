@@ -4,7 +4,8 @@ const app = express()
 import cors from "cors"
 import myUserRouters from "./MyRoutes/UserRouters.js"
 import myBlogRouters from "./MyRoutes/BlogRouters.js"
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 
 app.use(
   cors({
