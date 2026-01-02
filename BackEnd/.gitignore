@@ -5,6 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
+#Repeated
+./backend/routes/
+./backend/controller/
+
 # Runtime data
 pids
 *.pid

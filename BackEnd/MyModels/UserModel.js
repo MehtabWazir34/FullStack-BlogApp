@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const UserSchemaModel = new mongoose.Schema({
-    FullName : {
+    fullName : {
         type: String,
         require : true
     },

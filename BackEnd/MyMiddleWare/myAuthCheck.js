@@ -1,5 +1,5 @@
-import User from "../model/user.model";
-import { jwt } from "jsonwebtoken";
+import myUser from "../MyModels/UserModel.js";
+import jwt from "jsonwebtoken";
 const myAuthCheck = async(req, res, next)=>{
     try {
         let header = req.headers['authorization'];
@@ -17,7 +17,7 @@ const myAuthCheck = async(req, res, next)=>{
             return res.status(420).json({AlrtMsg:"Error"})
         };
         
-        let user = await User.findById(verifyToken.id).select("-password");
+        let user = await myUser.findById(verifyToken.id).select("-password");
         if(!user){
             return res.status(420).json({AlrtMsg:"Error"})
         };

@@ -1,15 +1,14 @@
 import express from "express"
-import userRouter from "./routes/user.routes.js"
-import blogRouter from "./routes/blog.routes.js"
 import connectDB from "./db/db.js"
 const app = express()
 import cors from "cors"
-import searchRouter from "./routes/search.routes.js"
+import myUserRouters from "./MyRoutes/UserRouters.js"
+import myBlogRouters from "./MyRoutes/BlogRouters.js"
 app.use(express.json())
 
 app.use(
   cors({
-    origin: "http://localhost:5175", // frontend URL
+    origin: "http://localhost:5173", // frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true, // if using cookies or auth headers
   })
@@ -17,9 +16,8 @@ app.use(
 
 connectDB()
 
-app.use("/user", userRouter)
-app.use("/blog", blogRouter)
-app.use("/user", searchRouter)
+app.use('/user', myUserRouters);
+app.use('/blog', myBlogRouters)
 
 app.get("/test", (req, res)=>{
     res.status(200).json({mssg: "checking route"})

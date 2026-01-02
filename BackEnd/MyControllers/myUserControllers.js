@@ -1,18 +1,17 @@
-import { JsonWebTokenError } from "jsonwebtoken";
-import User from "../model/user.model";
+
+import myUser from '../MyModels/UserModel.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-// import { login } from "../controller/user.controller";
 
-const CreateAccount = async(req, res)=>{
+export const CreateAccount = async(req, res)=>{
     try {
-        const {FUllName, UserName, Password, birthDay} = req.body;
-        if(!FUllName || !UserName || !Password || !birthDay){
+        const {fullName, UserName, Password, birthDay} = req.body;
+        if(!fullName || !UserName || !Password || !birthDay){
             return res.status(420).json({
                 AlrMsg: 'Opps! All fields are requireds'
             })
         };
-        let accountExts = await User.findOne({UserName});
+        let accountExts = await myUser.findOne({UserName});
         if(accountExts)
         {
            return res.status(503).json({
@@ -20,7 +19,7 @@ const CreateAccount = async(req, res)=>{
             })
         }
         let hashedPassword = await bcrypt.hash(Password, 10);
-        let theUser = await User.create({
+        let theUser = await myUser.create({
             fullName, UserName, birthDay, password: hashedPassword
         });
 
@@ -31,8 +30,9 @@ const CreateAccount = async(req, res)=>{
         res.status(200).json({AlrMsg:"Created ✅"})
         
     } catch (error) {
-        console.error('SOmething wrong❌', error)
-        return res.status(402).json({AlrMsg:"Error happened❌"})
+        console.log('SOmething wrong❌', error)
+        return res.status(402).json({AlrMsg:error.message})
+        
     }
 }
 
@@ -43,7 +43,7 @@ const Login = async(req, res)=>{
             return res.status(430).json({AlrMsg:"Required both"})
         };
 
-        let theUser = await User.findOne({username});
+        let theUser = await myUser.findOne({username});
         if(!theUser){
             return res.status(430).json({AlrMsg:"No account, plx create first."})
         };
@@ -67,7 +67,7 @@ const Login = async(req, res)=>{
 
 const Logout = async(req, res)=>{
     try {
-        await User.findOneAndUpdate(req.user._id, {token:''})
+        await myUser.findOneAndUpdate(req.user._id, {token:''})
         res.status(200).json({
             AlrMsg : 'Logged out ✅'
         })
@@ -77,13 +77,15 @@ const Logout = async(req, res)=>{
     }
 }
 
-const Profile = async(req, res) =>{
+const seeProfile = async(req, res) =>{
+    console.log('Hello check');
+    
     try {
         if(!req.user || !req.user._id){
             return res.status(420).json({AlrMsg:"Unauthorized"})
         };
 
-        let theUser = await User.findById(req.user._id).select('-password');
+        let theUser = await myUser.findById(req.user._id).select('-password');
         if(!theUser){
             return res.status(420).json({AlrMsg:"Unauthorized"})
         };
@@ -102,7 +104,7 @@ const upDateUserInfo = async(req, res)=>{
             return res.status(420).json({AlrMsg:"Unauthorized"})
         };
 
-        let updateTheUser = await User.findById(req.user._id,
+        let updateTheUser = await myUser.findById(req.user._id,
             {fullName, username, birthDay}, {new: true}
         ).select('-password');
         if(!updateTheUser){
@@ -121,4 +123,4 @@ const upDateUserInfo = async(req, res)=>{
 }
 
 
-export {CreateAccount, Login, Logout, Profile, upDateUserInfo}
+export { Login, Logout, seeProfile, upDateUserInfo}

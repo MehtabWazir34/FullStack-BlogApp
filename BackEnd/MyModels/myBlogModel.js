@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const myBlogSchemaModel = new mongoose.Schema({
-    Title : {
+    title : {
         type : String, require: true
     },
-    Description : {
+    description : {
         type : String, require: true
     },
-    Writer: {
+    writer: {
         type : mongoose.Schema.Types.ObjectId,
         require: true,
         ref : 'user'
     },
-    Likes : [{
+    likes : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     }],
-    Comments:[{
+    comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comment'
     }],
