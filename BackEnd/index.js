@@ -1,31 +1,48 @@
-import express from "express"
-import connectDB from "./db/db.js"
-const app = express()
-import cors from "cors"
-import myUserRouters from "./MyRoutes/UserRouters.js"
-import myBlogRouters from "./MyRoutes/BlogRouters.js"
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./db/db.js";
+import userRouter from "./MyRoutes/UserRouters.js";
+import blogRouter from "./MyRoutes/BlogRouters.js";
+
+dotenv.config(); // Load .env variables
+
+const app = express();
+
+
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
+    origin: process.env.FRONTEND_URL || "http://localhost:5173", // frontend URL from env
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true, // if using cookies or auth headers
+    credentials: true, // allow auth headers/cookies
   })
 );
 
-connectDB()
 
-app.use('/user', myUserRouters);
-app.use('/blog', myBlogRouters)
+app.use("/user", userRouter);
+app.use("/blog", blogRouter);
 
-app.get("/test", (req, res)=>{
-    res.status(200).json({mssg: "checking route"})
-})
+app.get("/test", (req, res) => {
+  res.status(200).json({ message: "API is working!" });
+});
 
-app.listen(3000, ()=>{
-    console.log("APP IS LISTNING ON PORT 3000");
-    
-})
 
+connectDB();
+
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err);
+  res.status(500).json({ message: "Internal Server Error" });
+});
+
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

@@ -1,15 +1,26 @@
 import { Router } from "express";
-import { blogDetail, deleteBlog, editBlog, getMyBLogs, newBlog, getBLogs } from "../MyControllers/myBlogControllers.js";
-import myAuthCheck from "../MyMiddleWare/myAuthCheck.js";
+import {
+  newBlog,
+  getBlogs,
+  getMyBlogs,
+  editBlog,
+  deleteBlog,
+  blogDetail,
+} from "../MyControllers/myBlogControllers.js";
+import authMiddleware from "../MyMiddleWare/myAuthCheck.js";
+
+const blogRouter = Router();
+
+//PROTECTED ROUTES
+blogRouter.post("/", authMiddleware, newBlog);         
+blogRouter.get("/me", authMiddleware, getMyBlogs);      
+blogRouter.put("/:id", authMiddleware, editBlog);       
+blogRouter.delete("/:id", authMiddleware, deleteBlog);  
 
 
-const myBlogRouters = Router();
+//PUBLIC ROUTES
 
-myBlogRouters.post("/addblog", myAuthCheck , newBlog);
-myBlogRouters.put('/editblog/:id', myAuthCheck, editBlog);
-myBlogRouters.delete('/deleteblog/:id', myAuthCheck, deleteBlog);
-myBlogRouters.get('/allblogs', getBLogs);
-myBlogRouters.get('/myblogs', myAuthCheck, getMyBLogs);
-myBlogRouters.get('/blog-details/:id', blogDetail)
+blogRouter.get("/", getBlogs);                         
+blogRouter.get("/:id", blogDetail);                     
 
-export default myBlogRouters
+export default blogRouter;

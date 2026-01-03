@@ -1,29 +1,53 @@
 import mongoose from "mongoose";
-const myBlogSchemaModel = new mongoose.Schema({
-    title : {
-        type : String, require: true
-    },
-    description : {
-        type : String, require: true
-    },
-    writer: {
-        type : mongoose.Schema.Types.ObjectId,
-        require: true,
-        ref : 'user'
-    },
-    likes : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
-    }],
-    comments:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'comment'
-    }],
-    blogImg:{
-        type: String,
-        require: true
-    }
-}, {timestamps: true});
 
-let myBlog = mongoose.model("myBlogModel", myBlogSchemaModel);
-export default myBlog
+const BlogSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 5,
+      maxlength: 150,
+    },
+
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 20,
+    },
+
+    writer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
+
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+
+    blogImg: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
+
+const Blog = mongoose.model("Blog", BlogSchema);
+export default Blog;

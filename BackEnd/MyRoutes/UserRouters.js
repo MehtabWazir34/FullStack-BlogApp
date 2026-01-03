@@ -1,13 +1,22 @@
 import { Router } from "express";
-import { CreateAccount, Login, Logout, seeProfile, upDateUserInfo } from "../MyControllers/myUserControllers.js";
-import myAuthCheck from "../MyMiddleWare/myAuthCheck.js";
+import {
+  CreateAccount,
+  Login,
+  Logout,
+  seeProfile,
+  upDateUserInfo,
+} from "../MyControllers/myUserControllers.js";
+import authMiddleware from "../MyMiddleWare/myAuthCheck.js";
 
-const myUserRouters = Router();
+const userRouter = Router();
 
-myUserRouters.post('/create-account', CreateAccount);
-myUserRouters.post('/login-to-account', Login);
-myUserRouters.get('/profile', myAuthCheck, seeProfile);
-myUserRouters.put('/logout-account', myAuthCheck, Logout);
-myUserRouters.put('/edit-profile', myAuthCheck, upDateUserInfo);
+userRouter.post("/register", CreateAccount);
+userRouter.post("/login", Login);
 
-export default myUserRouters
+
+//PROTECTED ROUTES
+userRouter.get("/profile", authMiddleware, seeProfile);
+userRouter.put("/profile", authMiddleware, upDateUserInfo);
+userRouter.post("/logout", authMiddleware, Logout);
+
+export default userRouter;

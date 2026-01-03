@@ -1,107 +1,169 @@
-import myUser from "../MyModels/UserModel.js";
-import myBlog from "../MyModels/myBlogModel.js";
+import User from "../MyModels/UserModel.js";
+import Blog from "../MyModels/myBlogModel.js";
 
-const newBlog = async(req, res)=>{
-    try {
-        const {title, description} = req.body;
-        if(!title || !description){
-            return res.status(402).json({
-                AlrtMsg : 'Opps! All fields are required'
-            });
-        }
-        //check auth
-        if(!req.user || !req.user._id){
-            return res.status(402).json({
-                AlrtMsg : 'Opps! Unauthorized'
-            });
-        }
+export const newBlog = async (req, res) => {
+  try {
+    const { title, description, blogImg } = req.body;
 
-        const myNewBlog = await myBlog.create(
-            {title, description, writer: req.user._id}
-        );
-        await myUser.findByIdAndUpdate(req.user._id, {$push:{Blogs : myNewBlog}}, {new: true});
-        res.status(200).json({AlrtMsg:"Blog added", myNewBlog})
-    } catch (error) {
-        
+    if (!title || !description || !blogImg) {
+      return res.status(400).json({
+        message: "Title, description, and image are required",
+      });
     }
-}
 
-const getBLogs = async(req, res)=>{
-    try {
-    const allBlogs = await myBlog.find();
-    if(!allBlogs){
-        return res.status(402).json({AlrtMsg:"Not found"})
-    };
-
-    res.status(200).json({allBlogs})
-        
-    } catch (error) {
-        console.error("Something wrong", error)
-        
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
+
+    const blog = await Blog.create({
+      title,
+      description,
+      blogImg,
+      writer: req.user.id,
+    });
+
+    await User.findByIdAndUpdate(
+      req.user.id,
+      { $push: { blogs: blog._id } },
+      { new: true }
+    );
+
+    return res.status(201).json({
+      success: true,
+      blog,
+    });
+
+  } catch (error) {
+    console.error("Create blog error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-const getMyBLogs = async(req, res)=>{
-    try {
-    const myBlogs = await myUser.findById(req.user._id).populate('blogs');
-    if(!myBlogs){
-        return res.status(402).json({AlrtMsg: 'Not found'});
-    };
-    res.status(200).json({AlrtMsg: "All your blogs are here"}, myBlogs)
-        
-    } catch (error) {
-        console.error("Something wrong", error)
+export const getBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find()
+      .populate("writer", "fullName userName profilePic")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: blogs.length,
+      blogs,
+    });
+
+  } catch (error) {
+    console.error("Get blogs error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+export const getMyBlogs = async (req, res) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
-}
 
-const deleteBlog = async(req, res)=>{
-    let blogId = req.params.id;
-    if(!theBLog){
-        return res.status(402).json({AlrtMsg:'Not found'})
+    const blogs = await Blog.find({ writer: req.user.id })
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: blogs.length,
+      blogs,
+    });
+
+  } catch (error) {
+    console.error("Get my blogs error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const blogDetail = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+
+    const blog = await Blog.findById(blogId)
+      .populate("writer", "fullName userName profilePic")
+      .populate("likes", "userName")
+      .populate("comments");
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
     }
-    let theBLog = await myUser.findByIdAndDelete(blogId);
-    res.status(200).json({AlrtMsg:"Deleted"});
-}
 
-const editBlog = async(req, res)=>{
-    try {
-        let blogId = req.params.id
-        const {title, description} = req.body;
-        if(!blogId){
-            return res.status(402).json({AlrtMsg:"Error"})
-        }
+    return res.status(200).json({
+      success: true,
+      blog,
+    });
 
-        const editedBlog = await myBlog.findByIdAndUpdate(blogId,
-            {title, description}, {new:true}
-        );
-        if(!editedBlog){
-            return res.status(402).json({AlrtMsg:"Error"})
-        }
+  } catch (error) {
+    console.error("Blog detail error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-        res.status(200).json({AlrtMsg:"Blog edited"}, editedBlog)
-        
-    } catch (error) {
-        console.error("Somthing happened wrong", error);
-        return res.status(402).json({AlrtMsg:"Error"})
+export const editBlog = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const { title, description, blogImg } = req.body;
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
     }
-}
 
-const blogDetail = async(req, res)=>{
-    try {
-        let blogId = req.params.id;
-        if(!blogId){
-            return res.status(402).json({AlrtMsg:"Error"})
-        };
-        let theBlog = await myBlog.findById(blogId);
-        if(!theBlog){
-            return res.status(402).json({AlrtMsg:"Error"})
-        }
-        res.status(200).json({AlrtMsg:"Blog is here."}, theBlog)
-    } catch (error) {
-        console.error("Somthing happened wrong", error);
-        return res.status(402).json({AlrtMsg:"Error"})
+    // authCheck
+    if (blog.writer.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
     }
-}
+
+    blog.title = title ?? blog.title;
+    blog.description = description ?? blog.description;
+    blog.blogImg = blogImg ?? blog.blogImg;
+
+    await blog.save();
+
+    return res.status(200).json({
+      success: true,
+      blog,
+    });
+
+  } catch (error) {
+    console.error("Edit blog error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
-export  {newBlog, getBLogs, getMyBLogs, deleteBlog, editBlog, blogDetail}
+export const deleteBlog = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    //authcheck
+    if (blog.writer.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    await Blog.findByIdAndDelete(blogId);
+
+    await User.findByIdAndUpdate(
+      req.user.id,
+      { $pull: { blogs: blogId } }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Blog deleted successfully",
+    });
+
+  } catch (error) {
+    console.error("Delete blog error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
