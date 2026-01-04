@@ -48,12 +48,12 @@ export default function App() {
             <Route path="signup" element={<Signup/>} />
             <Route path="/login" element={<LoginAccount />} />
             <Route path="/register" element={<CreateAccount />} />
+
             <Route path="/user/:id" element={
                 <ProtectedRoute>
                   <UserProfile />
-                </ProtectedRoute>
-              
-            } />
+                </ProtectedRoute>  
+              } />
 
             <Route
               path="/blog/:id"

@@ -1,49 +1,122 @@
-import axios from "axios";
-import { useState } from "react"
+import { useState } from "react";
 import api from "../src/api/axios";
+import apiROUTE from "../src/api/axiosROUTE";
 
-function CreateAccount (){
-    const [formData, setFormData] = useState({});
-    const submitForm = async(a)=>{
-        a.preventDefault()
-        let res = await api.post('/user/register', formData);
-        localStorage.setItem('token', res.data.token);
-        console.log(res);
-        
+function CreateAccount() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    userName: "",
+    birthDay: "",
+    password: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await api.post(apiROUTE.registerAPI, formData);
+      localStorage.setItem("token", res.data.token);
+      console.log(res);
+    } catch (error) {
+      console.error("Registration failed:", error);
+    } finally {
+      setLoading(false);
     }
-    return (
-        <div className="max-w-1/3 p-4 bg-blue-600 rounded-md">
-            <div className="text-center">
-                <h4 className="text-sm my-2 animate-bounce hover:animate-none hover:text-amber-500 transition-all duration-150">Welcome to the Blog'Spot</h4>
-                <h2 className="text-xl">Create your blog account</h2>
-            </div>
-            <form onSubmit={submitForm} >
-                <div>
-                <label htmlFor="fullName">FullName</label>
-                <input type="text" id="fullName" placeholder="Enter your full name"
-                onChange={(a)=> setFormData({...formData, fullName: a.target.value })} />
-                </div>
-                <div>
-                <label htmlFor="userName">UserName</label>
-                <input type="text" id="userName" placeholder="set your username"
-                onChange={(a)=> setFormData({...formData, userName: a.target.value })} />
-                </div>
-                <div>
-                <label htmlFor="birthDay">birthDay</label>
-                <input type="date" id="birthDay" placeholder="Enter your birthDay"
-                onChange={(a)=> setFormData({...formData, birthDay: a.target.value })} />
-                </div>
-                <div>
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" placeholder="min 06 characters"
-                onChange={(a)=> setFormData({...formData, password: a.target.value })} />
-                </div>
+  };
 
-                <button type="submit" className="mx-auto p-2 bg-blue-800 rounded-md cursor-pointer hover:bg-blue-900 transition-colors duration-200">Create Now</button>
-
-            </form>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-100">
+      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-lg">
+        
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-semibold text-slate-800">
+            Create Account
+          </h2>
+          <p className="text-sm text-slate-500 mt-1">
+            Join Blog'Spot and start writing
+          </p>
         </div>
-    )
+
+        {/* Form */}
+        <form onSubmit={submitForm} className="space-y-4">
+          
+          <div>
+            <label htmlFor="fullName" className="block text-sm text-slate-600">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              placeholder="John Doe"
+              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="userName" className="block text-sm text-slate-600">
+              Username
+            </label>
+            <input
+              type="text"
+              id="userName"
+              value={formData.userName}
+              onChange={handleChange}
+              placeholder="john_doe"
+              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="birthDay" className="block text-sm text-slate-600">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              id="birthDay"
+              value={formData.birthDay}
+              onChange={handleChange}
+              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm text-slate-600">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Minimum 6 characters"
+              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full mt-4 p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-60"
+          >
+            {loading ? "Creating Account..." : "Create Account"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
-export default CreateAccount
+export default CreateAccount;
