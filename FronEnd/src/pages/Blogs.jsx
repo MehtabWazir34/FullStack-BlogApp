@@ -8,7 +8,7 @@ const [blogs, setBlogs] = useState([]);
 
 
 useEffect(() => {
-api.get("/blog/blogs", {
+api.get("/blog/", {
     
 }).then(res => setBlogs(res.data.blogs));
 }, []);

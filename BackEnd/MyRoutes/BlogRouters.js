@@ -8,7 +8,6 @@ import {
   blogDetail,
 } from "../MyControllers/myBlogControllers.js";
 import authMiddleware from "../MyMiddleWare/myAuthCheck.js";
-
 const blogRouter = Router();
 
 //PROTECTED ROUTES

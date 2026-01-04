@@ -8,14 +8,14 @@ export default function MyBlogs() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await api.get("/blog/my-blogs", {
+        const res = await api.get("/blog/me", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 
         // Ensure it's an array
-        setBlogs(Array.isArray(res.data.myBlogs.blogs) ? res.data.myBlogs.blogs : []);
+        setBlogs(Array.isArray(res.data.blogs) ? res.data.blogs : []);
       } catch (err) {
         console.error(err);
       }
@@ -38,9 +38,9 @@ export default function MyBlogs() {
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
             >
               {/* Blog Image */}
-              {b.blogImage ? (
+              {b.blogImg ? (
                 <img
-                  src={b.blogImage}
+                  src={b.blogImg}
                   alt={b.title}
                   className="h-48 w-full object-cover"
                 />
@@ -51,12 +51,12 @@ export default function MyBlogs() {
               )}
 
               {/* Blog Content */}
-              <div className="p-5 flex flex-col flex-grow">
+              <div className="p-5 flex flex-col grow">
                 <h2 className="text-xl font-bold text-gray-800 line-clamp-2">
                   {b.title}
                 </h2>
-                <p className="text-gray-600 mt-2 line-clamp-3 flex-grow">
-                  {b.content}
+                <p className="text-gray-600 mt-2 line-clamp-3 grow">
+                  {b.description}
                 </p>
 
                 {/* Meta Info */}

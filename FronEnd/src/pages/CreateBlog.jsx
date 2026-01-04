@@ -11,7 +11,7 @@ const navigate = useNavigate();
 const submit = async e => {
 e.preventDefault();
 const response = await api.post(
-  "/blog/create",
+  "/blog/",
   form, // 👈 request body
   {
     headers: {
@@ -20,17 +20,17 @@ const response = await api.post(
   }
 );
 
-
 console.log(response);
 
 // navigate("/my-blogs");
 };
 
-
 return (
 <form onSubmit={submit} className="max-w-xl mx-auto mt-6 space-y-4">
+<input className="w-full border p-2" placeholder="Img url" onChange={e=>setForm({...form,blogImg:e.target.value})} />
+
 <input className="w-full border p-2" placeholder="Title" onChange={e=>setForm({...form,title:e.target.value})} />
-<textarea className="w-full border p-2" placeholder="Content" onChange={e=>setForm({...form,content:e.target.value})} />
+<textarea className="w-full border p-2" placeholder="Content" onChange={e=>setForm({...form,description:e.target.value})} />
 <button className="bg-black text-white px-4 py-2">Create</button>
 </form>
 );

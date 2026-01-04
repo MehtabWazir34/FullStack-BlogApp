@@ -86,9 +86,9 @@ export const blogDetail = async (req, res) => {
     const blogId = req.params.id;
 
     const blog = await Blog.findById(blogId)
-      .populate("writer", "fullName userName profilePic")
-      .populate("likes", "userName")
-      .populate("comments");
+      .populate("writer")
+      // .populate("userName")
+      // .populate("comments");
 
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
@@ -101,7 +101,7 @@ export const blogDetail = async (req, res) => {
 
   } catch (error) {
     console.error("Blog detail error ❌", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" , Err: error.message });
   }
 };
 
