@@ -21,6 +21,7 @@ app.use(
   })
 );
 
+connectDB();
 
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);
@@ -30,7 +31,6 @@ app.get("/test", (req, res) => {
 });
 
 
-connectDB();
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route not found" });

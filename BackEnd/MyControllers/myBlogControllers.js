@@ -53,7 +53,7 @@ export const getBlogs = async (req, res) => {
 
   } catch (error) {
     console.error("Get blogs error ❌", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
 
@@ -75,7 +75,9 @@ export const getMyBlogs = async (req, res) => {
 
   } catch (error) {
     console.error("Get my blogs error ❌", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error",
+      Error: error.message
+     });
   }
 };
 
@@ -114,8 +116,8 @@ export const editBlog = async (req, res) => {
     }
 
     // authCheck
-    if (blog.writer.toString() !== req.user.id) {
-      return res.status(403).json({ message: "Forbidden" });
+    if (blog.writer !== req.user.id) {
+      return res.status(403).json({ message: `Forbbiden! ${error.message}` });
     }
 
     blog.title = title ?? blog.title;
@@ -146,14 +148,14 @@ export const deleteBlog = async (req, res) => {
     }
 
     //authcheck
-    if (blog.writer.toString() !== req.user.id) {
+    if (Blog.writer !== req.user._id) {
       return res.status(403).json({ message: "Forbidden" });
     }
 
     await Blog.findByIdAndDelete(blogId);
 
     await User.findByIdAndUpdate(
-      req.user.id,
+      req.user._id,
       { $pull: { blogs: blogId } }
     );
 
@@ -164,6 +166,6 @@ export const deleteBlog = async (req, res) => {
 
   } catch (error) {
     console.error("Delete blog error ❌", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: `Internal error, ${error.message}` });
   }
 };

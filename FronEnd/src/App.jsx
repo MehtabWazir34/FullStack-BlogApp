@@ -14,6 +14,8 @@ import { useState } from "react";
 import SearchResults from "./components/SearchResult";
 import UserProfile from "./components/UserProfile";
 import MenuOpt from "./components/MenuOpt";
+import LoginAccount from "../MyPages/LoginAccount";
+import CreateAccount from "../MyPages/CreateAccount";
 
 export default function App() {
 
@@ -42,8 +44,10 @@ export default function App() {
 
           <Routes>
             <Route path="/" element={<Blogs />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/loginn" element={<Login/>} />
+            <Route path="signup" element={<Signup/>} />
+            <Route path="/login" element={<LoginAccount />} />
+            <Route path="/register" element={<CreateAccount />} />
             <Route path="/user/:id" element={
                 <ProtectedRoute>
                   <UserProfile />
