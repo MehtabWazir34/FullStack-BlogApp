@@ -15,7 +15,7 @@
     /update/:id
         - POST
         - protected route
-        - single("blogImage")
+        - single("blogImg")
         - /blog/update/:id
         - {
             link: imageLink

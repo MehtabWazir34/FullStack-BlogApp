@@ -6,5 +6,21 @@ const api = axios.create({
     withCredentials: true,
 });
 
+const userAPI_ROUTES = {
+    registerAPI : '/user/register',
+    loginAPI : '/user/login',
+    logoutAPI: '/user/logout',
+    updatePROFILE : '/user/updateprofile',
+    seePROFILE : '/user/profile'
 
-export default api;
+}
+const blogAPI_ROUTES = {
+    newBlogAPI : '/blog/newblogpost',
+    myBlogsAPI : '/blog/me',
+    editBlogAPI : '/blog/edit/:id',
+    deleteBlogAPI : '/blog/:id',
+    blogDetailAPI : '/blog/detail/:id',
+    allBlogsAPI : '/blog/'
+
+}
+export  {userAPI_ROUTES, api, blogAPI_ROUTES}

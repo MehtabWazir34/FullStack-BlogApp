@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useState } from "react"
-import api from "../src/api/axios";
+import api, { apiROUTES } from "../api/axios";
 
 function LoginAccount(){
     const [userName, setname] = useState('');
@@ -8,7 +7,7 @@ function LoginAccount(){
 
     const submitForm = async(a)=>{
         a.preventDefault();
-        let res = await api.post('/user/login', {userName, password});
+        let res = await api.post(apiROUTES.loginAPI, {userName, password});
         localStorage.setItem('token', res.data.token);
         console.log(res);
         

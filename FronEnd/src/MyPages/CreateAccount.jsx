@@ -1,7 +1,5 @@
 import { useState } from "react";
-import api from "../src/api/axios";
-import apiROUTE from "../src/api/axiosROUTE";
-
+import { api, apiROUTES } from "../api/axios";
 function CreateAccount() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -20,7 +18,7 @@ function CreateAccount() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await api.post(apiROUTE.registerAPI, formData);
+      const res = await api.post(apiROUTES.registerAPI, formData)
       localStorage.setItem("token", res.data.token);
       console.log(res);
     } catch (error) {

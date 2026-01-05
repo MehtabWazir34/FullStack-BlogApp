@@ -14,8 +14,8 @@ import { useState } from "react";
 import SearchResults from "./components/SearchResult";
 import UserProfile from "./components/UserProfile";
 import MenuOpt from "./components/MenuOpt";
-import LoginAccount from "../MyPages/LoginAccount";
-import CreateAccount from "../MyPages/CreateAccount";
+import LoginAccount from "./MyPages/LoginAccount";
+import CreateAccount from "./MyPages/CreateAccount";
 
 export default function App() {
 
@@ -83,7 +83,7 @@ export default function App() {
             />
 
             <Route
-              path="/edit/:id"
+              path="/blog/update/:id"
               element={
                 <ProtectedRoute>
                   <EditBlog />

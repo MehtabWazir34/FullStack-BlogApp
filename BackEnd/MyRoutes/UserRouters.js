@@ -16,7 +16,7 @@ userRouter.post("/login", Login);
 
 //PROTECTED ROUTES
 userRouter.get("/profile", authMiddleware, seeProfile);
-userRouter.put("/profile", authMiddleware, upDateUserInfo);
+userRouter.put("/updateprofile", authMiddleware, upDateUserInfo);
 userRouter.post("/logout", authMiddleware, Logout);
 
 export default userRouter;

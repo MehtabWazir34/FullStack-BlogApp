@@ -13,7 +13,7 @@ const blogSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    blogImage:{
+    blogImg:{
         type: String,
     },
     likes: [

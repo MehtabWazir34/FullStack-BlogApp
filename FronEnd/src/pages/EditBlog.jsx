@@ -12,7 +12,7 @@ export default function EditBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await api.get(`/blog/${id}`, {
+        const res = await api.get(`/update/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -32,7 +32,7 @@ export default function EditBlog() {
     try {
       const formData = new FormData();
       formData.append("title", form.title || "");
-      formData.append("content", form.content || "");
+      formData.append("content", form.description || "");
 
       await api.put(`/blog/update/${id}`, formData, {
         headers: {
@@ -52,7 +52,7 @@ export default function EditBlog() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("blogImage", file);
+    formData.append("blogImg", file);
 
     try {
       setUploading(true);
@@ -64,7 +64,7 @@ export default function EditBlog() {
       });
 
       // Update blog state with new image URL
-      setForm((prev) => ({ ...prev, blogImage: res.data.blogImage }));
+      setForm((prev) => ({ ...prev, blogImg: res.data.blogImg }));
       setUploading(false);
     } catch (err) {
       console.error(err);
@@ -85,15 +85,15 @@ export default function EditBlog() {
       <textarea
         className="w-full border p-2 rounded"
         placeholder="Content"
-        value={form.content || ""}
-        onChange={(e) => setForm({ ...form, content: e.target.value })}
+        value={form.description || ""}
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
         required
       />
 
       {/* Display current image if exists */}
-      {form.blogImage && (
+      {form.blogImg && (
         <img
-          src={form.blogImage}
+          src={form.blogImg}
           alt="Blog"
           className="w-full h-64 object-cover rounded-lg mb-2"
         />

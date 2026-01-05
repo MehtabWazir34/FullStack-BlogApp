@@ -64,9 +64,9 @@ return (
     <hr />
 
     {/* Blog Content */}
-    {/* <p className="text-gray-700 leading-relaxed text-lg whitespace-pre-line">
+    <p className="text-gray-700 leading-relaxed text-lg whitespace-pre-line">
       {blog.description}
-    </p> */}
+    </p>
 
     {/* Updated Info */}
     <p className="text-xs text-gray-400 pt-4 border-t">

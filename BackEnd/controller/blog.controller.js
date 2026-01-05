@@ -181,7 +181,7 @@ const deleteBlog = async (req, res) => {
     }
 };
 
-const updateBlogImage = async (req, res) => {
+const updateblogImg = async (req, res) => {
     try {
         const blogId = req.params.id;
 
@@ -209,7 +209,7 @@ const updateBlogImage = async (req, res) => {
         // ✅ FIX: new:true returns updated blog
         const updatedBlog = await Blog.findByIdAndUpdate(
             blogId,
-            { blogImage: result.secure_url },
+            { blogImg: result.secure_url },
             { new: true }
         );
 
@@ -235,5 +235,5 @@ export {
     getAllBlogs,
     getBlog,
     getMyBlogs,
-    updateBlogImage
+    updateblogImg
 };

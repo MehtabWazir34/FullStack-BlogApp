@@ -23,9 +23,9 @@ return (
       className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden"
     >
       {/* Blog Image */}
-      {b.blogImage ? (
+      {b.blogImg ? (
         <img
-          src={b.blogImage}
+          src={b.blogImg}
           alt={b.title}
           className="h-44 w-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
