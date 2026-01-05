@@ -41,7 +41,7 @@ export default function Navbar({  searchQuery,
           <Link className="text-gray-600 hover:text-indigo-600" to="/">
             Blogs
           </Link>
-          <Link className="text-gray-600 hover:text-indigo-600" to="/my-blogs">
+          <Link className="text-gray-600 hover:text-indigo-600" to="/myblogs">
             My Blogs
           </Link>
           <div

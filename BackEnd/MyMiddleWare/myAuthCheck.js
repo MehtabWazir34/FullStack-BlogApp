@@ -3,6 +3,9 @@ import User from "../MyModels/UserModel.js";
 // import { dotenv } from "dotenv";
 // dotenv.config()
 const authMiddleware = async (req, res, next) => {
+  console.log('AUTH HEADER:', req.headers.authorization);
+  console.log('METHOD:', req.method);
+
   try {
     const authHeader = req.headers.authorization;
 

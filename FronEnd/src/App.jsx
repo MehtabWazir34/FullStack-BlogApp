@@ -14,8 +14,10 @@ import { useState } from "react";
 // import SearchResults from "./components/SearchResult";
 // import UserProfile from "./components/UserProfile";
 import MenuOpt from "./components/MenuOpt";
-import LoginAccount from "./MyPages/LoginAccount";
-import CreateAccount from "./MyPages/CreateAccount";
+import LoginAccount from "./MyPages/LoginAccount.jsx";
+import CreateAccount from "./MyPages/CreateAccount.jsx";
+import NewBlog from "./MyPages/NewBlog.jsx";
+import MyBlogs from "./MyPages/MyBlogs.jsx";
 
 export default function App() {
 
@@ -46,8 +48,19 @@ export default function App() {
             {/* <Route path="/" element={<Blogs />} /> */}
             {/* <Route path="/loginn" element={<Login/>} /> */}
             {/* <Route path="signup" element={<Signup/>} /> */}
-            <Route path="/login" element={<LoginAccount />} />
+            <Route path="/login" element={ <LoginAccount/>} />
             <Route path="/register" element={<CreateAccount />} />
+
+            <Route path="createblog" element={
+              <ProtectedRoute>
+                <NewBlog/>
+              </ProtectedRoute>
+            } />
+            <Route path="myblogs" element={
+              <ProtectedRoute>
+                <MyBlogs />
+              </ProtectedRoute>
+            } />
 
             {/* <Route path="/user/:id" element={
                 <ProtectedRoute>
@@ -77,7 +90,7 @@ export default function App() {
               path="/create"
               element={
                 <ProtectedRoute>
-                  <CreateBlog />
+                  <ne />
                 </ProtectedRoute>
               }
             />

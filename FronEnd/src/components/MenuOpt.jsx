@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import api from '../api/axios';
+// import api from '../api/axios';
+import axios from 'axios';
 // import { useAuth } from '../Context/authContext';
 // import axios from 'axios';
 
@@ -9,17 +10,22 @@ function MenuOpt({setMenuOpt}) {
     let navigateTo = useNavigate()
     const handleLogout =async()=>{
         // a.preventDefault();
+        let token = localStorage.getItem('token')
         try {
-            await api.get('/user/logout', { 
-                headers : {
-                    Authorization : `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            await axios.post('http://localhost:3000/user/logout', 
+              {}, //no body parts required
+                {headers : {
+                    Authorization : `Bearer ${token}`
+                },
+              }
+            );
             
             localStorage.removeItem('token')
             // logout()
             // setMenuOpt(false)
             navigateTo('/login')
+            console.log("Hmm, loggedout");
+            
         } catch (error) {
             console.log('Soemthing wrong',error);
         }
@@ -37,7 +43,7 @@ function MenuOpt({setMenuOpt}) {
          <span className="font-semibold  group-hover:text-blue-900">My Account</span>
       </NavLink>
         <NavLink
-        to={'/create'}
+        to={'/createblog'}
         onClick={() => setMenuOpt(false)}
         className="flex items-center space-x-3 cursor-pointer transition-all duration-300 rounded-xl p-3 hover:bg-linear-to-r hover:from-blue-200 hover:to-purple-200 hover:text-blue-600 group mb-2"
       >

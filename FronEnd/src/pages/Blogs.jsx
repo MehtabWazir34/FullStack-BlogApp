@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import {api, blogAPI_ROUTES} from '../api/axios.js'
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 
 export default function Blogs() {
 const [blogs, setBlogs] = useState([]);
 
 
-useEffect(() => { api.p (, {
-    
-}).then(res => setBlogs(res.data.blogs));
+useEffect(() => { axios.get('http://localhost:3000/blog/', {})
+.then(res => setBlogs(res.data.blogs));
 }, []);
 
 

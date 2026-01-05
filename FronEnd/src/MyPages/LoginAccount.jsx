@@ -10,9 +10,17 @@ function LoginAccount(){
     const submitForm = async(a)=>{
         setLoading(true)
         a.preventDefault();
-        let res = await axios.post('/user/login', {userName, password});
+        try {
+        let res = await axios.post('http://localhost:3000/user/login', {userName, password});
         localStorage.setItem('token', res.data.token);
-        console.log(res);
+        console.log(res, res.data);
+          
+        } catch (error) {
+          console.log(`Error: ${error} , ${error.message}`);
+          
+        } finally{
+          setLoading(false)
+        }
         
     }
     return(
@@ -41,7 +49,7 @@ function LoginAccount(){
               id="fullName"
               value={userName}
               onChange={(a)=> setname(a.target.value)}
-              placeholder="John Doe"
+              placeholder="e.g: wazir34"
               className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -56,7 +64,7 @@ function LoginAccount(){
               id="password"
               value={password}
               onChange={(a)=> setPassword(a.target.value)}
-              placeholder="Minimum 6 characters"
+              placeholder="your password"
               className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />

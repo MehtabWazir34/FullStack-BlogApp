@@ -40,7 +40,7 @@ function CreateAccount() {
             Create Account
           </h2>
           <p className="text-sm text-slate-500 mt-1">
-            Join Blog'Spot and start writing
+            Join Blog'Spot and start blogging!
           </p>
         </div>
 
@@ -56,7 +56,7 @@ function CreateAccount() {
               id="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              placeholder="John Doe"
+              placeholder="e.g: Wazir Khan"
               className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -71,7 +71,7 @@ function CreateAccount() {
               id="userName"
               value={formData.userName}
               onChange={handleChange}
-              placeholder="john_doe"
+              placeholder="e.g: wazir34"
               className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
