@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import api from "../api/axios";
+import {api, blogAPI_ROUTES } from "../api/axios.js";
 
 export default function EditBlog() {
   const { id } = useParams();
@@ -12,7 +12,7 @@ export default function EditBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await api.get(`/update/${id}`, {
+        const res = await api.get(blogAPI_ROUTES.editBlogAPI, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

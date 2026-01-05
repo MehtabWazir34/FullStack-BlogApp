@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import {api, blogAPI_ROUTES } from "../api/axios.js";
 import { Link } from "react-router-dom";
 
 export default function MyBlogs() {
@@ -8,7 +8,7 @@ export default function MyBlogs() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await api.get("/blog/me", {
+        const res = await api.get(blogAPI_ROUTES.myBlogsAPI, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

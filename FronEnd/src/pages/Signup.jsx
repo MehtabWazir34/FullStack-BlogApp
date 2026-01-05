@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios";
+import {api, userAPI_ROUTES } from "../api/axios.js";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -8,7 +8,7 @@ export default function Signup() {
 
   const submit = async (e) => {
     e.preventDefault();
-   const response =  await api.post("/user/signup", form);
+   const response =  await api.post(userAPI_ROUTES.registerAPI, form);
    localStorage.setItem("token", response.data.token);
    navigate("/profile");
   // navigate("/login");

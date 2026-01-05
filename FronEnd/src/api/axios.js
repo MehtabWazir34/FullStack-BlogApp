@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const api = axios.create({
     baseURL: "http://localhost:3000/",
     withCredentials: true,
@@ -23,4 +22,4 @@ const blogAPI_ROUTES = {
     allBlogsAPI : '/blog/'
 
 }
-export  {userAPI_ROUTES, api, blogAPI_ROUTES}
+export default {api, userAPI_ROUTES, blogAPI_ROUTES}

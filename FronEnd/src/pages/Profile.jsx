@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import {api, userAPI_ROUTES } from "../api/axios.js";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -9,7 +9,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/user/profile", {
+        const res = await api.get(userAPI_ROUTES.seePROFILE, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -56,7 +56,7 @@ export default function Profile() {
   return (
     <div className="max-w-md mx-auto mt-8 bg-white rounded-2xl shadow-lg overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 flex items-center gap-4">
+      <div className="bg-linear-to-r from-indigo-500 to-purple-600 p-6 flex items-center gap-4">
         <img
           src={user.profileImage}
           alt="Profile"

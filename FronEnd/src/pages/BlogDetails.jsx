@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import {api, blogAPI_ROUTES } from "../src/api/axios.js";
 
 
 export default function BlogDetails() {
@@ -9,7 +9,7 @@ const [blog, setBlog] = useState(null);
 
 
 useEffect(() => {
-api.get(`/blog/${id}`, {
+api.get(blogAPI_ROUTES.blogDetailAPI, {
     headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },

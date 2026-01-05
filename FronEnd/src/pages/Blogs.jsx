@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import {api, blogAPI_ROUTES} from '../api/axios.js'
 import { Link } from "react-router-dom";
 
 
@@ -7,8 +7,7 @@ export default function Blogs() {
 const [blogs, setBlogs] = useState([]);
 
 
-useEffect(() => {
-api.get("/blog/", {
+useEffect(() => { api.p (, {
     
 }).then(res => setBlogs(res.data.blogs));
 }, []);

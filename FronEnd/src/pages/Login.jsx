@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios";
+import {api, userAPI_ROUTES } from "../api/axios.js";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -9,7 +9,7 @@ export default function Login() {
 
   const submit = async (e) => {
     e.preventDefault();
-    const response = await api.post("/user/login", { username, password });
+    const response = await api.post(userAPI_ROUTES.loginAPI, { username, password });
     localStorage.setItem("token", response.data.token);
     console.log(response);
     
@@ -17,7 +17,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-indigo-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-50 via-white to-indigo-100 px-4">
       <form
         onSubmit={submit}
         className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 space-y-6"

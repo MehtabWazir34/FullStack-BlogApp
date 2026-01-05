@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios";
+import {api, blogAPI_ROUTES } from "../api/axios.js";
 import { useNavigate } from "react-router-dom";
 
 
@@ -10,8 +10,7 @@ const navigate = useNavigate();
 
 const submit = async e => {
 e.preventDefault();
-const response = await api.post(
-  "/blog/",
+const response = await api.post(blogAPI_ROUTES.newBlogAPI,
   form, // 👈 request body
   {
     headers: {
@@ -22,7 +21,7 @@ const response = await api.post(
 
 console.log(response);
 
-// navigate("/my-blogs");
+navigate("/my-blogs");
 };
 
 return (

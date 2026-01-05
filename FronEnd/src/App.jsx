@@ -2,17 +2,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import Blogs from "./pages/Blogs";
-import BlogDetails from "./pages/BlogDetails";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import MyBlogs from "./pages/MyBlogs";
-import CreateBlog from "./pages/CreateBlog";
-import EditBlog from "./pages/EditBlog";
-import Profile from "./pages/Profile";
+// import Blogs from "./pages/Blogs";
+// import BlogDetails from "./pages/BlogDetails";
+// import Login from "./pages/Login";
+// import Signup from "./pages/Signup";
+// import MyBlogs from "./pages/MyBlogs";
+// import CreateBlog from "./pages/CreateBlog";
+// import EditBlog from "./pages/EditBlog";
+// import Profile from "./pages/Profile";
 import { useState } from "react";
-import SearchResults from "./components/SearchResult";
-import UserProfile from "./components/UserProfile";
+// import SearchResults from "./components/SearchResult";
+// import UserProfile from "./components/UserProfile";
 import MenuOpt from "./components/MenuOpt";
 import LoginAccount from "./MyPages/LoginAccount";
 import CreateAccount from "./MyPages/CreateAccount";
@@ -43,13 +43,13 @@ export default function App() {
               )}
 
           <Routes>
-            <Route path="/" element={<Blogs />} />
-            <Route path="/loginn" element={<Login/>} />
-            <Route path="signup" element={<Signup/>} />
+            {/* <Route path="/" element={<Blogs />} /> */}
+            {/* <Route path="/loginn" element={<Login/>} /> */}
+            {/* <Route path="signup" element={<Signup/>} /> */}
             <Route path="/login" element={<LoginAccount />} />
             <Route path="/register" element={<CreateAccount />} />
 
-            <Route path="/user/:id" element={
+            {/* <Route path="/user/:id" element={
                 <ProtectedRoute>
                   <UserProfile />
                 </ProtectedRoute>  
@@ -98,7 +98,7 @@ export default function App() {
                   <Profile />
                 </ProtectedRoute>
               }
-            />
+            /> */}
 
           </Routes>
           {
