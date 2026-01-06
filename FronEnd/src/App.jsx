@@ -18,6 +18,8 @@ import LoginAccount from "./MyPages/LoginAccount.jsx";
 import CreateAccount from "./MyPages/CreateAccount.jsx";
 import NewBlog from "./MyPages/NewBlog.jsx";
 import MyBlogs from "./MyPages/MyBlogs.jsx";
+import AllBlogs from "./MyPages/AllBlogs.jsx";
+import BlogDetails from "./MyPages/BlogDetails.jsx";
 
 export default function App() {
 
@@ -56,9 +58,20 @@ export default function App() {
                 <NewBlog/>
               </ProtectedRoute>
             } />
-            <Route path="myblogs" element={
+            <Route path="/myblogs" element={
               <ProtectedRoute>
                 <MyBlogs />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/" element={
+              <ProtectedRoute>
+                <AllBlogs />
+              </ProtectedRoute>
+            } />
+            <Route path={`/blog/detail/:id`} element = {
+              <ProtectedRoute>
+                <BlogDetails/>
               </ProtectedRoute>
             } />
 

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import User from "../MyModels/UserModel.js";
 import Blog from "../MyModels/myBlogModel.js";
 
@@ -82,8 +83,11 @@ export const getMyBlogs = async (req, res) => {
 };
 
 export const blogDetail = async (req, res) => {
+  const blogId = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(blogId)){
+    return res.status(401).json({message :'Invalide Id.'})
+  }
   try {
-    const blogId = req.params.id;
 
     const blog = await Blog.findById(blogId)
       .populate("writer")

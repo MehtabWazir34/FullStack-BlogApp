@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {api, blogAPI_ROUTES } from "../src/api/axios.js";
+import {api, blogAPI_ROUTES} from '../api/axios.js'
+import axios from "axios";
 
 
 export default function BlogDetails() {
@@ -9,7 +10,7 @@ const [blog, setBlog] = useState(null);
 
 
 useEffect(() => {
-api.get(blogAPI_ROUTES.blogDetailAPI, {
+axios.get( `http://localhost:3000/blog/detail/${id}`, {
     headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
@@ -48,7 +49,7 @@ return (
         {/* {new Date(blog.createdAt).toLocaleDateString()} */}
       </span>
       <span>
-        ✍️ Writer's ID: {blog.writer}
+        {/* ✍️ Writer's ID: {blog.writer} */}
       </span>
       <span>
         ❤️ 
@@ -71,7 +72,7 @@ return (
     {/* Updated Info */}
     <p className="text-xs text-gray-400 pt-4 border-t">
       Last updated on{" "}
-      {new Date(blog.updatedAt).toLocaleString()}
+      {/* {new Date(blog.updatedAt).toLocaleString()} */}
     </p>
   </div>
 </div>

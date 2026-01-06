@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/db.js";
 import userRouter from "./MyRoutes/UserRouters.js";
 import blogRouter from "./MyRoutes/BlogRouters.js";
+import mongoose from "mongoose";
 
 dotenv.config(); // Load .env variables
 
@@ -27,6 +28,13 @@ connectDB();
 
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);
+
+app.use((error, req, res, next)=>{
+  if(error instanceof mongoose.CastError){
+    res.status(401).json({message : 'invalide ID'})
+  }
+  res.status(500).json({message : "Error takes place."})
+})
 
 app.get("/test", (req, res) => {
   res.status(200).json({ message: "API is working!" });
