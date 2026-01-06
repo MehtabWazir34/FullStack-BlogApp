@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 
 function MyBlogs(){
     const [myBlogs, setMyBlogs] = useState([]);
@@ -12,27 +13,28 @@ function MyBlogs(){
                 let theBlogs = await axios.get('http://localhost:3000/blog/me',{
                     headers:{Authorization :`Bearer ${token}`}
                 });
-                setMyBlogs(Array.isArray(theBlogs.data) ? theBlogs.data : []);
-                console.log("Your blogs has been fetched.");
+                setMyBlogs(Array.isArray(theBlogs.data.blogs) ? theBlogs.data.blogs : []);
                 
-            } catch (error) {
+              } catch (error) {
                 console.log(`Err: ${error}`);
                 
-            }
+              }
+              console.log("Your blogs has been fetched.");
         }
         getMyBlogs()
     },[])
 
     return(
-        <div className="p-6 max-w-4xl mx-auto">
+        <div className="w-full min-h-screen bg-gray-50 py-10 px-4 rounded-md">
       <h1 className="text-3xl font-bold mb-8">My Blogs</h1>
 
       {myBlogs.length === 0 ? (
         <p className="text-gray-500 text-center">No blogs found.</p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
           {myBlogs.map((b) => (
-            <div
+            <Link
+              to={`/blog/detail/${b._id}`}
               key={b._id}
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
             >
@@ -77,7 +79,7 @@ function MyBlogs(){
                   Edit
                 </Link>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

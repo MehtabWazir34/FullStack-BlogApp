@@ -73,7 +73,7 @@ function NewBlog() {
               id="description"
               rows="6"
               placeholder="Write your blog content here..."
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-l-black focus:border-b-black focus:border-2 resize-none"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-l-black focus:border-b-black focus:border-2 "
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
