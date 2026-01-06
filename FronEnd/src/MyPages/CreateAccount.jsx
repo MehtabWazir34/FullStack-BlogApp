@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { Input, Label } from "../Inputs/Input";
+import LoginAccount from "./LoginAccount";
+import { useNavigate } from "react-router-dom";
 // import axios, { api, userAPI_ROUTES } from "../api/axios.js";
 
 function CreateAccount() {
@@ -11,6 +14,7 @@ function CreateAccount() {
   });
 
   const [loading, setLoading] = useState(false);
+  let navigateTo = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -27,6 +31,7 @@ function CreateAccount() {
       console.error("Registration failed:", error);
     } finally {
       setLoading(false);
+      navigateTo('/')
     }
   };
 
@@ -48,72 +53,68 @@ function CreateAccount() {
         <form onSubmit={submitForm} className="space-y-4">
           
           <div>
-            <label htmlFor="fullName" className="block text-sm text-slate-600">
-              Full Name
-            </label>
-            <input
+            <Label lblFor={'fullName'} lblName={'FullName'} />
+            <Input
               type="text"
               id="fullName"
               value={formData.fullName}
               onChange={handleChange}
               placeholder="e.g: Wazir Khan"
               className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              required={'required'}
             />
           </div>
 
           <div>
-            <label htmlFor="userName" className="block text-sm text-slate-600">
-              Username
-            </label>
-            <input
+            <Label lblFor={'userName'}
+              lblName={'UserName'}
+            />
+            <Input
               type="text"
               id="userName"
               value={formData.userName}
               onChange={handleChange}
               placeholder="e.g: wazir34"
-              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              required={'required'}
             />
           </div>
 
           <div>
-            <label htmlFor="birthDay" className="block text-sm text-slate-600">
-              Date of Birth
-            </label>
-            <input
+            <Label lblFor="birthDay" 
+              lblName={'Date of Birth'}
+            />
+            <Input
               type="date"
               id="birthDay"
               value={formData.birthDay}
               onChange={handleChange}
-              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              required={'required'}
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm text-slate-600">
-              Password
-            </label>
-            <input
+            <Label lblFor="password"
+              lblName={'Password'}
+            />
+            <Input
               type="password"
               id="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="Minimum 6 characters"
-              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              required={'required'}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-4 p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-60"
+            className="w-full cursor-pointer mt-4 p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-60"
           >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
+        <p className="text-center my-4">Already have an account? <a href="/login" className="underline text-blue-700">Login Now</a></p>
       </div>
     </div>
   );

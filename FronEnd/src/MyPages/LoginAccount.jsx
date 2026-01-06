@@ -1,11 +1,14 @@
 import { useState } from "react"
 // import  {api, userAPI_ROUTES } from "../api/axios.js";
 import axios from "axios";
+import { Input, Label } from "../Inputs/Input";
+import { useNavigate } from "react-router-dom";
 
 function LoginAccount(){
     const [userName, setname] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    let navigateTo = useNavigate()
 
     const submitForm = async(a)=>{
         setLoading(true)
@@ -20,6 +23,7 @@ function LoginAccount(){
           
         } finally{
           setLoading(false)
+          navigateTo('/')
         }
         
     }
@@ -41,32 +45,31 @@ function LoginAccount(){
         <form onSubmit={submitForm} className="space-y-4">
           
           <div>
-            <label htmlFor="fullName" className="block text-sm text-slate-600">
-              User Name
-            </label>
-            <input
+            <Label lblFor="fullName"
+              lblName={'User Name'}
+            />
+            <Input
               type="text"
               id="fullName"
               value={userName}
               onChange={(a)=> setname(a.target.value)}
               placeholder="e.g: wazir34"
               className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              required={'required'}
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm text-slate-600">
-              Password
-            </label>
-            <input
+            <Label lblFor="password" 
+              lblName = {'Password'}
+            />
+            <Input
               type="password"
               id="password"
               value={password}
               onChange={(a)=> setPassword(a.target.value)}
               placeholder="your password"
-              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              required={'required'}
             />
           </div>
 
@@ -78,6 +81,7 @@ function LoginAccount(){
             {loading ? "Logging in..." : "Login Now"}
           </button>
         </form>
+        <p className="text-center my-4">Don't have an account? <a href="/register" className="underline text-blue-700">Create Now</a></p>
       </div>
     </div>
     )

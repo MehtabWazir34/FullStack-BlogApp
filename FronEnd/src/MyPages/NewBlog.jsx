@@ -1,52 +1,99 @@
 import axios from "axios";
-import { useState } from "react"
-// import {api, blogAPI_ROUTES} from '../api/axios.js'
+import { useState } from "react";
+import { Input, Label } from "../Inputs/Input";
 
-function NewBlog(){
-    const [formData, setFormData] = useState({});
+function NewBlog() {
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-    const createBlog = async(a)=>{
-        a.preventDefault();
-        let token = localStorage.getItem('token')
-        try {
-            let theBlog = await axios.post('http://localhost:3000/blog/newblogpost', formData,
-                {
-                    headers :{
-                        Authorization : `Bearer ${token}`
-                    }
-                }
-            )
-            
-            console.log(theBlog);
-        } catch (error) {
-            console.log(`Error: ${error}`);
-            
+  const createBlog = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        "http://localhost:3000/blog/newblogpost",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        
+      );
+      console.log(res);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error creating blog:", error);
+      setLoading(false);
     }
-    return(
-        <div className="w-1/2 p-4 rounded-md bg-amber-50">
-            <form onSubmit={createBlog}>
-                <div>
-                <label htmlFor="blogImg">blogImg</label>
-                <input type="text" id="blogImg" placeholder="blogImg" onChange={(a)=> setFormData({...formData, blogImg : a.target.value})} />
+  };
 
-                </div>
-                <div>
-                <label htmlFor="title">Title</label>
-                <input type="text" id="title" placeholder="Title" onChange={(a)=> setFormData({...formData, title : a.target.value})} />
-
-                </div>
-                <div>
-                <label htmlFor="description">description</label>
-                <textarea type="text" id="description" placeholder="description" onChange={(a)=> setFormData({...formData, description : a.target.value})} />
-
-                </div>
-                <div>
-                    <button type="submit">Post Now</button>
-                </div>
-            </form>
+  return (
+    <section className="w-full min-h-screen bg-gray-50 py-10 px-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Create New Blog
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Share your thoughts with the world
+          </p>
         </div>
-    )
+
+        {/* Form */}
+        <form onSubmit={createBlog} className="space-y-6">
+          
+          {/* Blog Image */}
+          <div>
+            <Label lblFor={'blogImg'} lblName={'Image URL'} />
+            <Input
+            value={formData.blogImg}
+            id={'blogImg'}
+              type="text"
+              placeholder="https://example.com/image.jpg"
+              onChange={(e) =>
+                setFormData({ ...formData, blogImg: e.target.value })
+              }
+            />
+          </div>
+
+          {/* Title */}
+          <div>
+           <Label lblFor='title' lblName={'Title'} />
+            <Input value={formData.title} id={'title'} type={'text'} placeholder={'Enter blog title'} onChange={a =>setFormData({...formData, title : a.target.value})}/>
+          </div>
+
+          {/* Description */}
+          <div>
+            <Label lblFor={'description'} lblName={'Description'} />
+            <textarea
+              id="description"
+              rows="6"
+              placeholder="Write your blog content here..."
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-l-black focus:border-b-black focus:border-2 resize-none"
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+            />
+          </div>
+
+          {/* Submit */}
+          <div className="pt-4 flex justify-center">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full cursor-pointer md:w-auto px-8 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition disabled:opacity-60"
+            >
+              {loading ? "Posting..." : "Post Blog"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
 }
-export default NewBlog
+
+export default NewBlog;
