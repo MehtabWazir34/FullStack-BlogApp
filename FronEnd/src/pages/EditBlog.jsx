@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {api, blogAPI_ROUTES } from "../api/axios.js";
+import axios from "axios";
 
 export default function EditBlog() {
   const { id } = useParams();
@@ -12,17 +13,21 @@ export default function EditBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await api.get(blogAPI_ROUTES.editBlogAPI, {
+        const res = await axios.get(`http://localhost:3000/blog/edit/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+        console.log(res);
+        
         setForm(res.data.blog);
       } catch (err) {
         console.error(err);
       }
     };
     fetchBlog();
+    // console.log(fetchBlog);
+    
   }, [id]);
 
   // Handle main blog update (title/content)
@@ -32,9 +37,9 @@ export default function EditBlog() {
     try {
       const formData = new FormData();
       formData.append("title", form.title || "");
-      formData.append("content", form.description || "");
+      formData.append("description", form.description || "");
 
-      await api.put(`/blog/update/${id}`, formData, {
+      await axios.put(`http://localhost:3000/blog/edit/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -47,30 +52,30 @@ export default function EditBlog() {
   };
 
   // Handle blog image upload separately
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // const handleImageUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
 
-    const formData = new FormData();
-    formData.append("blogImg", file);
+  //   const formData = new FormData();
+  //   formData.append("blogImg", file);
 
-    try {
-      setUploading(true);
-      const res = await api.put(`/blog/image/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+  //   try {
+  //     setUploading(true);
+  //     const res = await api.put(`/blog/image/${id}`, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     });
 
-      // Update blog state with new image URL
-      setForm((prev) => ({ ...prev, blogImg: res.data.blogImg }));
-      setUploading(false);
-    } catch (err) {
-      console.error(err);
-      setUploading(false);
-    }
-  };
+  //     // Update blog state with new image URL
+  //     setForm((prev) => ({ ...prev, blogImg: res.data.blogImg }));
+  //     setUploading(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setUploading(false);
+  //   }
+  // };
 
   return (
     <form onSubmit={submit} className="max-w-xl mx-auto mt-6 space-y-4">
@@ -100,7 +105,7 @@ export default function EditBlog() {
       )}
 
       {/* Image Upload */}
-      <div className="flex items-center gap-4">
+      {/* <div className="flex items-center gap-4">
         <label className="cursor-pointer bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
           {uploading ? "Uploading..." : "Change Blog Image"}
           <input
@@ -110,7 +115,7 @@ export default function EditBlog() {
             onChange={handleImageUpload}
           />
         </label>
-      </div>
+      </div> */}
 
       <button
         type="submit"

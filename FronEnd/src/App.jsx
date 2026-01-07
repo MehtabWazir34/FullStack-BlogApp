@@ -2,14 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// import Blogs from "./pages/Blogs";
-// import BlogDetails from "./pages/BlogDetails";
-// import Login from "./pages/Login";
-// import Signup from "./pages/Signup";
-// import MyBlogs from "./pages/MyBlogs";
-// import CreateBlog from "./pages/CreateBlog";
-// import EditBlog from "./pages/EditBlog";
-// import Profile from "./pages/Profile";
+
 import { useState } from "react";
 // import SearchResults from "./components/SearchResult";
 // import UserProfile from "./components/UserProfile";
@@ -20,6 +13,7 @@ import NewBlog from "./MyPages/NewBlog.jsx";
 import MyBlogs from "./MyPages/MyBlogs.jsx";
 import AllBlogs from "./MyPages/AllBlogs.jsx";
 import BlogDetails from "./MyPages/BlogDetails.jsx";
+import EditBlog from "./pages/EditBlog.jsx";
 
 export default function App() {
 
@@ -75,6 +69,14 @@ export default function App() {
               </ProtectedRoute>
             } />
 
+            <Route
+              path="/blog/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <EditBlog />
+                </ProtectedRoute>
+              }
+            />
             {/* <Route path="/user/:id" element={
                 <ProtectedRoute>
                   <UserProfile />
@@ -108,14 +110,6 @@ export default function App() {
               }
             />
 
-            <Route
-              path="/blog/update/:id"
-              element={
-                <ProtectedRoute>
-                  <EditBlog />
-                </ProtectedRoute>
-              }
-            />
 
             <Route
               path="/profile"

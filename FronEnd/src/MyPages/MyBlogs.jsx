@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function MyBlogs(){
     const [myBlogs, setMyBlogs] = useState([]);
+    const [delBlog, setDelBlog] = useState(null)
 
     useEffect(()=>{
         const getMyBlogs = async()=>{
@@ -24,6 +25,21 @@ function MyBlogs(){
         getMyBlogs()
     },[])
 
+    // let {id} = useParams()
+
+    const DeleteBlog = async(id)=>{
+      try {
+        await axios.delete(`http://localhost:3000/blog/${id}`,{
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }).then((res)=> setDelBlog(res.data.blog))
+      } catch (error) {
+        console.log("error:", error);
+        
+      }
+    }
+
     return(
         <div className="w-full min-h-screen bg-gray-50 py-10 px-4 rounded-md">
       <h1 className="text-3xl font-bold mb-8">My Blogs</h1>
@@ -33,10 +49,13 @@ function MyBlogs(){
       ) : (
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
           {myBlogs.map((b) => (
+            <div
+              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
+            >
             <Link
               to={`/blog/detail/${b._id}`}
               key={b._id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
+              // className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
             >
               {/* Blog Image */}
               {b.blogImg ? (
@@ -56,7 +75,7 @@ function MyBlogs(){
                 <h2 className="text-xl font-bold text-gray-800 line-clamp-2">
                   {b.title}
                 </h2>
-                <p className="text-gray-600 mt-2 line-clamp-3 grow">
+                <p className="text-gray-600 mt-2 line-clamp-4 text-sm grow">
                   {b.description}
                 </p>
 
@@ -66,20 +85,25 @@ function MyBlogs(){
                     📅 {new Date(b.createdAt).toLocaleDateString()}
                   </span>
                   <div className="flex gap-4">
-                    {/* <span>❤️ {b.likes.length}</span> */}
-                    {/* <span>💬 {b.comments.length}</span> */}
+                    <span>❤️ {b.likes.length}</span> 
+                     <span>💬 {b.comments.length}</span>
                   </div>
                 </div>
 
                 {/* Edit Link */}
-                <Link
-                //   to={`/edit/${b._id}`}
-                  className="mt-3 inline-block text-indigo-600 font-medium hover:underline"
-                >
-                  Edit
-                </Link>
               </div>
             </Link>
+                <div className="flex justify-between px-6">
+
+                <Link
+                  to={`/blog/edit/${b._id}`}
+                  className=" inline-block text-indigo-600 font-medium hover:underline"
+                  >
+                  Edit
+                </Link>
+                <button onClick={()=>DeleteBlog(b._id)} className="cursor-pointer  inline-block text-indigo-600 font-medium hover:underline">Delete</button>
+                  </div>
+              </div>
           ))}
         </div>
       )}

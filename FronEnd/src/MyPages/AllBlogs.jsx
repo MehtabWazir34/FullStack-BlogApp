@@ -49,7 +49,7 @@ function AllBlogs() {
               </h2>
 
               {/* Highlight / Short Description */}
-              <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+              <p className="text-sm text-gray-600 mt-2 line-clamp-4 grow">
                 {blog.description}
               </p>
 
