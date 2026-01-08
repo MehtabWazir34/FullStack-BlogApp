@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function MyBlogs(){
     const [myBlogs, setMyBlogs] = useState([]);
@@ -49,7 +49,7 @@ function MyBlogs(){
       ) : (
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
           {myBlogs.map((b) => (
-            <div
+            <div key={b._id}
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
             >
             <Link

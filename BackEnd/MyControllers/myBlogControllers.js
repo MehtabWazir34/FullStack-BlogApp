@@ -112,27 +112,18 @@ export const blogDetail = async (req, res) => {
 export const editBlog = async (req, res) => {
   try {
     const blogId = req.params.id;
-    const { title, description, blogImg } = req.body;
+    const { title, description} = req.body;
 
-    const blog = await Blog.findById(blogId);
-    if (!blog) {
-      return res.status(404).json({ message: "Blog not found" });
+    if(!blogId){
+      return res.status(404).json({message: "Invalid ID, blog not found to this ID."})
     }
-
-    // authCheck
-    if (blog.writer !== req.user.id) {
-      return res.status(403).json({ message: `Forbbiden!` });
-    }
-
-    blog.title = title ?? blog.title;
-    blog.description = description ?? blog.description;
-    blog.blogImg = blogImg ?? blog.blogImg;
-
-    await blog.save();
+    const editedBlog = await Blog.findByIdAndUpdate(blogId, {title, description},{new: true})
+    if(!editedBlog)
+      return res.status(404).json({message:"Not found the blog to update."})
 
     return res.status(200).json({
       success: true,
-      blog,
+      editedBlog,
     });
 
   } catch (error) {
