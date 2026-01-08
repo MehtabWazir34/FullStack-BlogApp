@@ -6,8 +6,11 @@ import { Input, Label } from "../Inputs/Input";
 export default function EditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
-const [form, setForm] = useState({});
+  // const [title, setTitle] = useState('');
   // const [description, setDesc] = useState('');
+  const [formData, setForm] = useState({
+    title:" ", description: " ",
+  });
 
   useEffect(() => {
     if(!id) return null
@@ -21,8 +24,8 @@ const [form, setForm] = useState({});
       );
         setForm({
           title: res.data.blog.title,
-        description: res.data.blog.description
-      })
+          description: res.data.blog.description
+        })
         console.log(res);
       } catch (err) {
         console.error(err);
@@ -37,7 +40,7 @@ const [form, setForm] = useState({});
     e.preventDefault();
     try {
       await axios.put(`http://localhost:3000/blog/edit/${id}`, {
-        form
+        title: formData.title, description: formData.description,
       }, {
         headers: {
           // "Content-Type": "multipart/form-data",
@@ -57,8 +60,8 @@ const [form, setForm] = useState({});
         id={"title"}
         className="w-full border p-2 rounded"
         placeholder="Title"
-        value={form.title}
-        onChange={(e) => setForm({...form, title : e.target.value} )}
+        value={formData.title}
+        onChange={(e) => setForm({...formData, title: e.target.value })}
         required={'required'}
       />
 
@@ -67,8 +70,8 @@ const [form, setForm] = useState({});
         id="desc"
          className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-l-black focus:border-b-black focus:border-2 "
         placeholder="Content"
-        value={form.description}
-        onChange={(e) => setForm({...form , description: e.target.value} )}
+        value={formData.description}
+        onChange={(e) => setForm({...formData, description:e.target.value} )}
         required
       />
 

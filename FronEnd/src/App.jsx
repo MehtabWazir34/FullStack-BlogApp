@@ -14,6 +14,7 @@ import MyBlogs from "./MyPages/MyBlogs.jsx";
 import AllBlogs from "./MyPages/AllBlogs.jsx";
 import BlogDetails from "./MyPages/BlogDetails.jsx";
 import EditBlog from "./pages/EditBlog.jsx";
+import SeeProfile from "./MyPages/SeeProfile.jsx";
 
 export default function App() {
 
@@ -77,12 +78,12 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/user/:id" element={
+            <Route path="/user/:id" element={
                 <ProtectedRoute>
-                  <UserProfile />
+                  <SeeProfile />
                 </ProtectedRoute>  
               } />
-
+{/* 
             <Route
               path="/blog/:id"
               element={

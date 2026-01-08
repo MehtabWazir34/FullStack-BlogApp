@@ -108,26 +108,45 @@ export const blogDetail = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" , Err: error.message });
   }
 };
-
-export const editBlog = async (req, res) => {
+export const getEditBlog = async (req, res) => {
   try {
-    const blogId = req.params.id;
-    const { title, description} = req.body;
+    const blog = await Blog.findById(req.params.id);
 
-    if(!blogId){
-      return res.status(404).json({message: "Invalid ID, blog not found to this ID."})
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
     }
-    const editedBlog = await Blog.findByIdAndUpdate(blogId, {title, description},{new: true})
-    if(!editedBlog)
-      return res.status(404).json({message:"Not found the blog to update."})
 
     return res.status(200).json({
       success: true,
-      editedBlog,
+      blog,
     });
 
   } catch (error) {
-    console.error("Edit blog error ❌", error);
+    console.error("Get edit blog error ❌", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const updateBlog = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      req.params.id,
+      { title, description },
+      { new: true }
+    );
+
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      updatedBlog,
+    });
+
+  } catch (error) {
+    console.error("Update blog error ❌", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
