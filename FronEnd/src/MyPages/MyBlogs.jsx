@@ -28,6 +28,7 @@ function MyBlogs(){
     // let {id} = useParams()
 
     const DeleteBlog = async(id)=>{
+      alert("Blog has been deleted.")
       try {
         await axios.delete(`http://localhost:3000/blog/${id}`,{
           headers:{
@@ -40,14 +41,27 @@ function MyBlogs(){
       }
     }
 
+    
     return(
-        <div className="w-full min-h-screen bg-gray-50 py-10 px-4 rounded-md">
-      <h1 className="text-3xl font-bold mb-8">My Blogs</h1>
+      <>
+          {myBlogs.length === 0 && (
+            <div className="w-full min-h-4/5 bg-white p-6 rounded-md">
+              <h1 className="text-3xl font-bold mb-8 text-left">My Blogs <span>({myBlogs.length})</span></h1>
+    
+            <div className="grid gap-y-4 place-items-center">
+            <p className="text-gray-500 text-center">No blogs found.</p>
+            <Link to={'/createblog'} className="bg-blue-700 rounded-md hover:bg-blue-800 text-white cursor-pointer p-2">
+            Create now your first blog post.
+            </Link>
+            </div>
+            </div>
+          ) }
 
-      {myBlogs.length === 0 ? (
-        <p className="text-gray-500 text-center">No blogs found.</p>
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
+      { myBlogs.length !== 0 &&
+        (
+          <div className="w-full min-h-screen bg-gray-50 py-10 px-4 rounded-md">
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
+          <h1 className="text-3xl font-bold mb-8">My Blogs <span>({myBlogs.length})</span></h1>
           {myBlogs.map((b) => (
             <div key={b._id}
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden flex flex-col"
@@ -104,10 +118,15 @@ function MyBlogs(){
                 <button onClick={()=>DeleteBlog(b._id)} className="cursor-pointer  inline-block text-indigo-600 font-medium hover:underline">Delete</button>
                   </div>
               </div>
-          ))}
+          )
+        )
+          }
         </div>
-      )}
     </div>
+      )
+    }
+    
+    </>
     )
 }
 export default MyBlogs

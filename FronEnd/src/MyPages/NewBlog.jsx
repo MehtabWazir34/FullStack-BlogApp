@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { Input, Label } from "../Inputs/Input";
+import { useNavigate } from "react-router-dom";
 
 function NewBlog() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  let navigateTo = useNavigate()
 
   const createBlog = async (e) => {
     e.preventDefault();
@@ -21,8 +23,10 @@ function NewBlog() {
           },
         }
       );
+      alert("Blog has been created.")
       console.log(res);
       setLoading(false);
+      navigateTo('/myblogs')
     } catch (error) {
       console.error("Error creating blog:", error);
       setLoading(false);

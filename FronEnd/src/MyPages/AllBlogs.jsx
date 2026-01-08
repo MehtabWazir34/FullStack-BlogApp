@@ -14,7 +14,7 @@ function AllBlogs() {
   
 
   return (
-    <section className="w-full min-h-screen bg-gray-50 py-10 px-4">
+    <section className="w-full min-h-screen bg-gray-50 py-10 px-4 rounded-md">
       {/* Header */}
       <div className="max-w-7xl mx-auto text-center mb-10">
         <h1 className="text-3xl font-bold text-gray-900">

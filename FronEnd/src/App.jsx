@@ -18,28 +18,28 @@ import SeeProfile from "./MyPages/SeeProfile.jsx";
 
 export default function App() {
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [showResults, setShowResults] = useState(false);
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [searchResults, setSearchResults] = useState([]);
+  // const [showResults, setShowResults] = useState(false);
 
   const [menuOpt, setMenuOpt] = useState(false)
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-linear-to-br from-gray-500 to-gray-700">
             <Navbar
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              setSearchResults={setSearchResults}
-              setShowResults={setShowResults}
+              // searchQuery={searchQuery}
+              // setSearchQuery={setSearchQuery}
+              // setSearchResults={setSearchResults}
+              // setShowResults={setShowResults}
               menuOpt = {()=>setMenuOpt(!menuOpt)}
         />
       <main className="max-w-7xl mx-auto px-4 py-8">
-              {showResults && (
+              {/* {showResults && (
                 <SearchResults
                   users={searchResults}
                   clearResults={() => setShowResults(false)}
                 />
-              )}
+              )} */}
 
           <Routes>
             {/* <Route path="/" element={<Blogs />} /> */}
