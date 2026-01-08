@@ -9,8 +9,9 @@ function MenuOpt({setMenuOpt}) {
     // let {logout} = useAuth()
     let navigateTo = useNavigate()
     const handleLogout =async()=>{
-        // a.preventDefault();
-        let token = localStorage.getItem('token')
+      // a.preventDefault();
+      // setMenuOpt(false)    
+      let token = localStorage.getItem('token')
         try {
             await axios.post('http://localhost:3000/user/logout', 
               {}, //no body parts required
@@ -22,10 +23,8 @@ function MenuOpt({setMenuOpt}) {
             
             localStorage.removeItem('token')
             // logout()
-            // setMenuOpt(false)
             navigateTo('/login')
             console.log("Hmm, loggedout");
-            
         } catch (error) {
             console.log('Soemthing wrong',error);
         }
@@ -34,7 +33,7 @@ function MenuOpt({setMenuOpt}) {
     <div className='fixed right-4 top-18  backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-4 z-50 min-w-50 animate-fade-in'>
         <div>
         <NavLink
-        to={'/profile'}
+        to={`user/:id`}
         onClick={() => setMenuOpt(false)}
         className="flex items-center space-x-3 cursor-pointer transition-all duration-300 rounded-xl p-3 hover:bg-linear-to-r hover:from-blue-200 hover:to-purple-200 hover:text-blue-600 group mb-2"
       >
@@ -53,6 +52,7 @@ function MenuOpt({setMenuOpt}) {
       </NavLink>
         <button type='button'
         // to={'/profile'}
+        
         onClick={handleLogout}
         className="flex items-center space-x-3 cursor-pointer transition-all duration-300 rounded-xl p-3 hover:bg-linear-to-r hover:from-blue-200 hover:to-purple-200 hover:text-blue-600 group mb-2"
       >

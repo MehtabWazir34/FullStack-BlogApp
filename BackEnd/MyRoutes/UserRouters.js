@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   CreateAccount,
+  deleteAccount,
   Login,
   Logout,
   seeProfile,
@@ -18,5 +19,6 @@ userRouter.post("/login", Login);
 userRouter.get("/profile", authMiddleware, seeProfile);
 userRouter.put("/updateprofile", authMiddleware, upDateUserInfo);
 userRouter.post("/logout", authMiddleware, Logout);
+userRouter.delete('/delete-account/:id', authMiddleware, deleteAccount)
 
 export default userRouter;

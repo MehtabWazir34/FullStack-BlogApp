@@ -16,22 +16,22 @@ function CreateAccount() {
   const [loading, setLoading] = useState(false);
   let navigateTo = useNavigate()
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+  // const (a)=> setFormData({...formData, userName: a.target.value}) = (e) => {
+  //   setFormData({ ...formData, [e.target.id]: e.target.value });
+  // };
 
   const submitForm = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post('/user/register', formData)
+      const res = await axios.post('http://localhost:3000/user/register', formData)
       localStorage.setItem("token", res.data.token);
       console.log(res);
     } catch (error) {
       console.error("Registration failed:", error);
     } finally {
       setLoading(false);
-      navigateTo('/')
+      navigateTo('/user/profile')
     }
   };
 
@@ -58,9 +58,9 @@ function CreateAccount() {
               type="text"
               id="fullName"
               value={formData.fullName}
-              onChange={handleChange}
+              onChange={(a)=> setFormData({...formData, fullName: a.target.value})}
               placeholder="e.g: Wazir Khan"
-              className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              // className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required={'required'}
             />
           </div>
@@ -73,7 +73,7 @@ function CreateAccount() {
               type="text"
               id="userName"
               value={formData.userName}
-              onChange={handleChange}
+              onChange={(a)=> setFormData({...formData, userName: a.target.value})}
               placeholder="e.g: wazir34"
               required={'required'}
             />
@@ -87,7 +87,7 @@ function CreateAccount() {
               type="date"
               id="birthDay"
               value={formData.birthDay}
-              onChange={handleChange}
+              onChange={(a)=> setFormData({...formData, birthDay: a.target.value})}
               required={'required'}
             />
           </div>
@@ -100,7 +100,7 @@ function CreateAccount() {
               type="password"
               id="password"
               value={formData.password}
-              onChange={handleChange}
+              onChange={(a)=> setFormData({...formData, password: a.target.value})}
               placeholder="Minimum 6 characters"
               required={'required'}
             />

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MyBlogs from "./MyBlogs";
+import { useNavigate } from "react-router-dom";
 
 function SeeProfile() {
   const [theUser, setTheUser] = useState(null);
@@ -27,6 +28,22 @@ function SeeProfile() {
 
     seeUser();
   }, []);
+  
+  let navigateTo = useNavigate();
+
+  const deleteAccount = async(id)=>{
+    alert("This action is permanent, cant't be reversed.")
+    try {
+            await axios.delete(`http://localhost:3000/user/delete-account/${id}`,{
+                headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}
+            });
+            console.log("Account deleted");
+            navigateTo("/login")
+    } catch (error) {
+        console.log(error);
+        
+    }
+  }
 
   if (loading) {
     return (
@@ -43,6 +60,7 @@ function SeeProfile() {
       </div>
     );
   }
+
 
   return (
     <section className="w-full min-h-screen bg-gray-50 py-10 px-4 rounded-md">
@@ -72,9 +90,11 @@ function SeeProfile() {
               </div>
             )}
           </div>
+          <div className="mt-6 flex justify-end">
+            <button onClick={()=> deleteAccount(theUser._id)} className="bg-red-600 rounded-md cursor-pointer p-2 text-white hover:bg-red-700">Delete Account</button>
+          </div>
         </div>
 
-        {/* My Blogs Section */}
         <div className="bg-white rounded-2xl shadow-md p-6 md:p-8">
         
           <MyBlogs />
