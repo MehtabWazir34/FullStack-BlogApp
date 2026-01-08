@@ -121,7 +121,7 @@ export const editBlog = async (req, res) => {
 
     // authCheck
     if (blog.writer !== req.user.id) {
-      return res.status(403).json({ message: `Forbbiden! ${error.message}` });
+      return res.status(403).json({ message: `Forbbiden!` });
     }
 
     blog.title = title ?? blog.title;

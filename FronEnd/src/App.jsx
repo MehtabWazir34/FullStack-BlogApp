@@ -13,7 +13,7 @@ import NewBlog from "./MyPages/NewBlog.jsx";
 import MyBlogs from "./MyPages/MyBlogs.jsx";
 import AllBlogs from "./MyPages/AllBlogs.jsx";
 import BlogDetails from "./MyPages/BlogDetails.jsx";
-import EditBlog from "./pages/EditBlog.jsx";
+// import EditBlog from "./pages/EditBlog.jsx";
 
 export default function App() {
 
@@ -69,14 +69,14 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-            <Route
+            {/* <Route
               path="/blog/edit/:id"
               element={
                 <ProtectedRoute>
                   <EditBlog />
                 </ProtectedRoute>
               }
-            />
+            /> */}
             {/* <Route path="/user/:id" element={
                 <ProtectedRoute>
                   <UserProfile />
