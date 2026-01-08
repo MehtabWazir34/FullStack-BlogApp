@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api/axios.js";
+import api from "../api/api.js";
 
 export default function UserDetails() {
   const { id } = useParams();

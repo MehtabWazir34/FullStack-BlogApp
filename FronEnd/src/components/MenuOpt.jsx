@@ -13,7 +13,7 @@ function MenuOpt({setMenuOpt}) {
       // setMenuOpt(false)    
       let token = localStorage.getItem('token')
         try {
-            await axios.post('http://localhost:3000/user/logout', 
+            await api.post('/user/logout', 
               {}, //no body parts required
                 {headers : {
                     Authorization : `Bearer ${token}`

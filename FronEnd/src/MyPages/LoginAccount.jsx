@@ -1,6 +1,6 @@
 import { useState } from "react"
-// import  {api, userAPI_ROUTES } from "../api/axios.js";
-import axios from "axios";
+// import  {api, userAPI_ROUTES } from "../api/api.js";
+import api from "../api/axios";
 import { Input, Label } from "../Inputs/Input";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ function LoginAccount(){
         setLoading(true)
         a.preventDefault();
         try {
-        let res = await axios.post('http://localhost:3000/user/login', {userName, password});
+        let res = await api.post('/user/login', {userName, password});
         localStorage.setItem('token', res.data.token);
         console.log(res, res.data);
           

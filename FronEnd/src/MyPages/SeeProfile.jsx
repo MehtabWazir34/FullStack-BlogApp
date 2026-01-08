@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api/axios";
 import { useEffect, useState } from "react";
 import MyBlogs from "./MyBlogs";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +10,8 @@ function SeeProfile() {
   useEffect(() => {
     const seeUser = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3000/user/profile",
+        const res = await api.get(
+          "/user/profile",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -34,7 +34,7 @@ function SeeProfile() {
   const deleteAccount = async(id)=>{
     alert("This action is permanent, cant't be reversed.")
     try {
-            await axios.delete(`http://localhost:3000/user/delete-account/${id}`,{
+            await api.delete(`/user/delete-account/${id}`,{
                 headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}
             });
             console.log("Account deleted");
