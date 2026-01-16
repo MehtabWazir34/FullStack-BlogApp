@@ -9,7 +9,7 @@ pnpm-debug.log*
 routes/
 controller/
 db/
-
+./api/index.js/
 uploads/
 # Runtime data
 pids
