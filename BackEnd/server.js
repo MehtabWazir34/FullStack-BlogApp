@@ -24,10 +24,10 @@ app.use(
 
 connectDB();
 
-app.use("/api/user", userRouter);
-app.use("/api/blog", blogRouter);
+app.use("/user", userRouter);
+app.use("/blog", blogRouter);
 
-app.get("/api/test", (req, res) => {
+app.get("/test", (req, res) => {
   res.status(200).json({ message: "API is working!" });
 });
 
@@ -47,7 +47,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3400;
 app.listen(PORT, () => {
   console.log(`Local server running on port ${PORT}`);
 });

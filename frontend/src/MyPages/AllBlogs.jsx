@@ -2,14 +2,18 @@ import api from "../api/axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import api from "../api/axios";
-
+// import axios from 'axios'
 function AllBlogs() {
   const [allBlogs, setAllBlogs] = useState([]);
 
   useEffect(() => {
-    api.get("/blog/")
+    const getBlogs= async()=>{
+      // a.preventDefault();
+      await api.get('/')
       .then((res) => setAllBlogs(res.data.blogs))
       .catch((err) => console.error(err));
+    }
+    getBlogs();
   }, []);
   
 

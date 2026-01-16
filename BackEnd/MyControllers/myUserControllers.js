@@ -28,7 +28,7 @@ export const CreateAccount = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || "orKey123or",
       { expiresIn: "7d" }
     );
 
@@ -68,7 +68,7 @@ export const Login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || "orKey123or",
       { expiresIn: "7d" }
     );
 
