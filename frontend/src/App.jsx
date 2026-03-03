@@ -9,7 +9,7 @@ import NewBlog from './MyPages/NewBlog.jsx';
 import MyBlogs from "./MyPages/MyBlogs.jsx"
 import AllBlogs from "./MyPages/AllBlogs.jsx";
 import BlogDetails from "./MyPages/BlogDetails.jsx";
-import EditBlog from "./pages/EditBlog.jsx";
+import EditBlog from "./MyPages/EditBlog.jsx";
 import SeeProfile from "./MyPages/SeeProfile.jsx";
 
 export default function App() {
