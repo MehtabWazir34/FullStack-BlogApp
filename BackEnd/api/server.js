@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./db/db.js";
-import userRouter from "./MyRoutes/UserRouters.js";
-import blogRouter from "./MyRoutes/BlogRouters.js";
+import userRouter from "../MyRoutes/UserRouters.js";
+import blogRouter from "../MyRoutes/BlogRouters.js";
 import mongoose from "mongoose";
 
 dotenv.config();
