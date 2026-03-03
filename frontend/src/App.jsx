@@ -3,10 +3,10 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useState } from "react";
 import MenuOpt from "./components/MenuOpt";
-import LoginAccount from "./MyPages/LoginAccount.jsx";
+import LoginAccount from "./MyPages/LoginAccount";
 import CreateAccount from "./MyPages/CreateAccount.jsx";
-import NewBlog from "./MyPages/NewBlog.jsx";
-import MyBlogs from "./MyPages/MyBlogs.jsx";
+import NewBlog from './MyPages/NewBlog.jsx';
+import MyBlogs from "./MyPages/MyBlogs.jsx"
 import AllBlogs from "./MyPages/AllBlogs.jsx";
 import BlogDetails from "./MyPages/BlogDetails.jsx";
 import EditBlog from "./pages/EditBlog.jsx";
@@ -25,7 +25,7 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 py-8">
 
           <Routes>
-            <Route path="/login" element={ <LoginAccount/>} />
+            <Route path="/login" element={<LoginAccount/>} />
             <Route path="/register" element={<CreateAccount />} />
 
             <Route path="createblog" element={
