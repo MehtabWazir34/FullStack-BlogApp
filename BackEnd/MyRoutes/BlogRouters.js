@@ -16,7 +16,7 @@ const blogRouter = Router();
 blogRouter.post("/newblogpost", authMiddleware, newBlog);         
 blogRouter.get("/me", authMiddleware, getMyBlogs);    
 blogRouter.get("/edit/:id", authMiddleware, getEditBlog);
-blogRouter.put("/edit/:id", authMiddleware, updateBlog);
+blogRouter.put("/update/:id", authMiddleware, updateBlog);
       
 blogRouter.delete("/:id", authMiddleware, deleteBlog);  
 

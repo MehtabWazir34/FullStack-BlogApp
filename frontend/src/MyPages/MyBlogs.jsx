@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "../api/axios";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
@@ -11,7 +12,7 @@ function MyBlogs(){
             // a.preventDefault();
             let token = localStorage.getItem('token')
             try {
-                let theBlogs = await api.get('/blog/me',{
+                let theBlogs = await axios.get('http://localhost:3400/blog/me',{
                     headers:{Authorization :`Bearer ${token}`}
                 });
                 setMyBlogs(Array.isArray(theBlogs.data.blogs) ? theBlogs.data.blogs : []);

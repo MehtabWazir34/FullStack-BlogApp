@@ -1,4 +1,5 @@
-import api from "../api/axios";
+// import api from "../api/axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import api from "../api/axios";
@@ -9,7 +10,7 @@ function AllBlogs() {
   useEffect(() => {
     const getBlogs= async()=>{
       // a.preventDefault();
-      await api.get('/')
+      await axios.get('http://localhost:3400/blog/')
       .then((res) => setAllBlogs(res.data.blogs))
       .catch((err) => console.error(err));
     }

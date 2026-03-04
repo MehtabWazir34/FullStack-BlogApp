@@ -1,8 +1,9 @@
 import { useState } from "react"
 // import  {api, userAPI_ROUTES } from "../api/api.js";
-import api from "../api/axios";
+// import api from "../api/axios";
 import { Input, Label } from "../Inputs/Input";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LoginAccount(){
     const [userName, setname] = useState('');
@@ -14,7 +15,7 @@ function LoginAccount(){
         setLoading(true)
         a.preventDefault();
         try {
-        let res = await api.post('/user/login', {userName, password});
+        let res = await axios.post('http://localhost:3400/user/login', {userName, password});
         localStorage.setItem('token', res.data.token);
         console.log(res, res.data);
           

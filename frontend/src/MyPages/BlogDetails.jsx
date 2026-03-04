@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "../api/axios";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
@@ -7,7 +8,8 @@ function BlogDetails (){
     const [blog, setBlog] = useState(null);
 
 useEffect(()=>{
-    api.get( `/blog/detail/${id}`,
+  const getBlogDetails =async()=>{
+    await axios.get( `http://localhost:3400/blog/detail/${id}`,
         {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -16,6 +18,8 @@ useEffect(()=>{
     ).then((res)=>{ setBlog(res.data.blog) 
         console.log(res.data.blog);
     })
+  }
+  getBlogDetails();
 }, [id]);
 
 if(!blog) return null

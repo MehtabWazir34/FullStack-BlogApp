@@ -16,7 +16,7 @@ export default function EditBlog() {
     if(!id) return null
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/blog/edit/${id}`, {
+        const res = await axios.get(`http://localhost:3400/blog/edit/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -39,7 +39,7 @@ export default function EditBlog() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/blog/edit/${id}`, {
+      await axios.put(`http://localhost:3400/blog/update/${id}`, {
         title: formData.title, description: formData.description,
       }, {
         headers: {
