@@ -1,6 +1,6 @@
 import { Link, Links, NavLink } from "react-router-dom";
-import SearchUser from "./SearchUser";
-import MenuOpt from "./MenuOpt";
+// import SearchUser from "./SearchUser";
+// import MenuOpt from "./MenuOpt";
 import { useAuth } from "../Context/authContext";
 import {ImBlog} from 'react-icons/im'
 // import { useAuth } from "../../../backend/middlewares/authContext";
