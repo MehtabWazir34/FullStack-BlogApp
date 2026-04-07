@@ -1,5 +1,4 @@
-import axios from "axios";
-import api from "../api/axios";
+import axiosAPI from '../api/axios';
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 
@@ -9,7 +8,7 @@ function BlogDetails (){
 
 useEffect(()=>{
   const getBlogDetails =async()=>{
-    await axios.get( `http://localhost:3400/blog/detail/${id}`,
+    await axiosAPI.get(`/blog/detail/${id}`,
         {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,

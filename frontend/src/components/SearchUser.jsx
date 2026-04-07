@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import api from "../api/axios";
+import { useEffect } from "react";
+import axiosAPI from "../api/axios.js";
 
  function SearchUser({  searchQuery,
                   setSearchQuery,
@@ -14,7 +14,7 @@ useEffect(() => {
   }
 
   const delayDebounce = setTimeout(async () => {
-    const res = await api.get(
+    const res = await axiosAPI.get(
       `/user/search?q=${searchQuery}`,
       { withCredentials: true }
     );

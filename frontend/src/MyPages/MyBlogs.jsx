@@ -1,5 +1,4 @@
-import axios from "axios";
-import api from "../api/axios";
+import axiosAPI from '../api/axios';
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
@@ -12,7 +11,7 @@ function MyBlogs(){
             // a.preventDefault();
             let token = localStorage.getItem('token')
             try {
-                let theBlogs = await axios.get('http://localhost:3400/blog/me',{
+                let theBlogs = await axiosAPI.get('/blog/me',{
                     headers:{Authorization :`Bearer ${token}`}
                 });
                 setMyBlogs(Array.isArray(theBlogs.data.blogs) ? theBlogs.data.blogs : []);
@@ -31,7 +30,7 @@ function MyBlogs(){
     const DeleteBlog = async(id)=>{
       alert("Blog has been deleted.")
       try {
-        await api.delete(`/blog/${id}`,{
+        await axiosAPI.delete(`/blog/${id}`,{
           headers:{
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }

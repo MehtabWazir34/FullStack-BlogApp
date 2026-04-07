@@ -1,13 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api/api.js";
-
+import axiosAPI from "../api/api.js";
 export default function UserDetails() {
   const { id } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    api
+    axiosAPI
       .get(`/user/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

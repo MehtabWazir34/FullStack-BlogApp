@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./MyRoutes/UserRouters.js";
 import blogRouter from "./MyRoutes/BlogRouters.js";
 import mongoose from "mongoose";
-import connectDB from "./db/db.js";
+// import connectDB from "./db/db.js";
 
 dotenv.config();
 
@@ -15,15 +15,25 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: process.env.FRONTEND_URL ,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
+// import mongoose from "mongoose"
+const connectDB = async()=>{
+    try {
+        await mongoose.connect(process.env.MONGODB_URI)
+        console.log("DB Connected.");
+        
+    } catch (error) {
+        console.log("ERR to connectDB", error);
+        
+    }
+}
 connectDB();
-
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);
 
@@ -47,9 +57,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-// const PORT = process.env.PORT || 3400;
-// app.listen(PORT, () => {
-//   console.log(`Local server running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 3400;
+app.listen(PORT, () => {
+  console.log(`Local server running on port ${PORT}`);
+});
 
 export default app;

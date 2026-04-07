@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import api from '../api/axios';
-import axios from 'axios';
-// import { useAuth } from '../Context/authContext';
-// import axios from 'axios';
+import axiosAPI from '../api/axios'
+
 
 function MenuOpt({setMenuOpt}) {
     // let {logout} = useAuth()
@@ -13,7 +11,7 @@ function MenuOpt({setMenuOpt}) {
       // setMenuOpt(false)    
       let token = localStorage.getItem('token')
         try {
-            await api.post('/user/logout', 
+            await axiosAPI.post('/user/logout', 
               {}, //no body parts required
                 {headers : {
                     Authorization : `Bearer ${token}`

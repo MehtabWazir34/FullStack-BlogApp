@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Input, Label } from "../Inputs/Input";
+import axiosAPI from "../api/axios.js";
 
 export default function EditBlog() {
   const { id } = useParams();
@@ -16,7 +16,7 @@ export default function EditBlog() {
     if(!id) return null
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:3400/blog/edit/${id}`, {
+        const res = await axiosAPI.get(`/blog/edit/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -39,7 +39,7 @@ export default function EditBlog() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3400/blog/update/${id}`, {
+      await axiosAPI.put(`/blog/update/${id}`, {
         title: formData.title, description: formData.description,
       }, {
         headers: {

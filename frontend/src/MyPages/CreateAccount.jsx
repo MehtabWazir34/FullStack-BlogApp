@@ -1,10 +1,8 @@
-// import api from "../api/axios";
 import { useState } from "react";
 import { Input, Label } from "../Inputs/Input";
 // import LoginAccount from "./LoginAccount";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-// import axios, { api, userAPI_ROUTES } from "../api/api.js";
+import axiosAPI from "../api/axios.js";
 
 function CreateAccount() {
   const [formData, setFormData] = useState({
@@ -23,11 +21,12 @@ function CreateAccount() {
 
   const submitForm = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
-      const res = await axios.post('http://localhost:3400/user/register', formData)
+      const res = await axiosAPI.post('/user/register', formData)
       localStorage.setItem("token", res.data.token);
       console.log(res);
+      setLoading(false);
     } catch (error) {
       console.error("Registration failed:", error);
     } finally {

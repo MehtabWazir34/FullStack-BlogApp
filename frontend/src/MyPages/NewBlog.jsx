@@ -1,8 +1,7 @@
-import api from "../api/axios";
 import { useState } from "react";
 import { Input, Label } from "../Inputs/Input";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosAPI from "../api/axios";
 
 function NewBlog() {
   const [formData, setFormData] = useState({});
@@ -15,8 +14,8 @@ function NewBlog() {
 
     try {
       setLoading(true);
-      const res = await axios.post(
-        "http://localhost:3400/blog/newblogpost",
+      const res = await axiosAPI.post(
+        "/blog/newblogpost",
         formData,
         {
           headers: {

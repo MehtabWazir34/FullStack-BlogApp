@@ -3,7 +3,7 @@ import { useState } from "react"
 // import api from "../api/axios";
 import { Input, Label } from "../Inputs/Input";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosAPI from "../api/axios.js";
 
 function LoginAccount(){
     const [userName, setname] = useState('');
@@ -15,7 +15,7 @@ function LoginAccount(){
         setLoading(true)
         a.preventDefault();
         try {
-        let res = await axios.post('http://localhost:3400/user/login', {userName, password});
+        let res = await axiosAPI.post('/user/login', {userName, password});
         localStorage.setItem('token', res.data.token);
         console.log(res, res.data);
           

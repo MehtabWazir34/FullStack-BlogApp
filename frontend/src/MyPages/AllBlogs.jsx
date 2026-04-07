@@ -1,16 +1,13 @@
-// import api from "../api/axios";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import api from "../api/axios";
-// import axios from 'axios'
+import axiosAPI from "../api/axios";
 function AllBlogs() {
   const [allBlogs, setAllBlogs] = useState([]);
 
   useEffect(() => {
     const getBlogs= async()=>{
       // a.preventDefault();
-      await axios.get('http://localhost:3400/blog/')
+      await axiosAPI.get('/blog/')
       .then((res) => setAllBlogs(res.data.blogs))
       .catch((err) => console.error(err));
     }
