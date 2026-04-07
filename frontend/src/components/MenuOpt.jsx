@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import axiosAPI from '../api/axios.js'
+import axiosAPI from '../api/axios';
 
 
 function MenuOpt({setMenuOpt}) {
