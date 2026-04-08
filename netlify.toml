@@ -1,0 +1,16 @@
+[build]
+  functions = "BackEnd/netlify/functions"
+
+# ✅ Catch-all redirect — /api/anything → function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# ✅ Also redirect root /api (no trailing slash)
+[[redirects]]
+  from = "/api"
+  to = "/.netlify/functions/api"
+  status = 200
+  force = true
