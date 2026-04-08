@@ -6,6 +6,7 @@ import blogRouter from "./MyRoutes/BlogRouters.js";
 import mongoose from "mongoose";
 // import connectDB from "./db/db.js";
 
+// Added to .gitignore
 dotenv.config();
 
 const app = express();
