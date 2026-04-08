@@ -1,5 +1,7 @@
 [build]
+  publish = "public"
   functions = "BackEnd/netlify/functions"
+  command = "cd BackEnd && npm install"
 
 # ✅ Catch-all redirect — /api/anything → function
 [[redirects]]
