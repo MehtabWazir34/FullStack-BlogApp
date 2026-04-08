@@ -3,7 +3,6 @@ import {
   newBlog,
   getBlogs,
   getMyBlogs,
-  // editBlog,
   deleteBlog,
   blogDetail,
   updateBlog,

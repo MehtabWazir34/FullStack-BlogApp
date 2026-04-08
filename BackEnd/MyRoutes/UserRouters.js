@@ -14,7 +14,6 @@ const userRouter = Router();
 userRouter.post("/register", CreateAccount);
 userRouter.post("/login", Login);
 
-
 //PROTECTED ROUTES
 userRouter.get("/profile", authMiddleware, seeProfile);
 userRouter.put("/updateprofile", authMiddleware, upDateUserInfo);
